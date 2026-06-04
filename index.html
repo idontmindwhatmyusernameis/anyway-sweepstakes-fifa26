@@ -291,52 +291,32 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
       overflow: hidden;
-      cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s;
       min-height: 110px;
       position: relative;
+      user-select: none;
     }
-    .scratch-card:hover:not(.revealed) {
+    .scratch-card:not(.revealed):hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .scratch-front {
+    /* Canvas sits on top, drawn via JS */
+    .scratch-canvas {
       position: absolute;
       inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, var(--c-accent) 0%, #0f5e30 100%);
-      border: none;
-      transition: opacity 0.4s, transform 0.4s;
       border-radius: var(--radius-lg);
+      display: block;
+      /* Coin cursor — drop coin-cursor.png in the project root */
+      cursor: url('cursor.png') 16 32, crosshair;
+      touch-action: none;
     }
-    .scratch-front-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.9);
-      text-align: center;
-      padding: 0 12px;
-    }
-    .scratch-front-hint {
-      font-size: 11px;
-      color: rgba(255,255,255,0.5);
-    }
+    .scratch-canvas.hidden { display: none; }
     .scratch-back {
       padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      opacity: 0;
-      transition: opacity 0.4s 0.2s;
     }
-    .scratch-card.revealed .scratch-front {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    .scratch-card.revealed .scratch-back { opacity: 1; }
     .scratch-back-name {
       font-size: 12px;
       font-weight: 600;
@@ -350,9 +330,6 @@
       font-weight: 500;
     }
     .scratch-flag { font-size: 18px; }
-    .scratch-card.cpu-card .scratch-front {
-      background: linear-gradient(135deg, #999 0%, #666 100%);
-    }
     .draw-controls {
       display: flex;
       gap: 10px;
@@ -1269,11 +1246,9 @@ function renderDraw() {
     const badgeTxt = p.entry==='paid'?'💰':p.entry==='bragging'?'🏆':'❤️';
 
     return `
-      <div class="scratch-card ${isCpu?'cpu-card':''}" id="${cardId}" onclick="revealCard('${cardId}')">
-        <div class="scratch-front">
-          <div class="scratch-front-name">${p.name}</div>
-          <div class="scratch-front-hint">${p.teams?.length ? 'tap to reveal' : 'no team'}</div>
-        </div>
+      <div class="scratch-card ${isCpu?'cpu-card':''}" id="${cardId}"
+           data-name="${p.name.replace(/"/g,'&quot;')}"
+           data-cpu="${isCpu}">
         <div class="scratch-back">
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div class="scratch-back-name">${p.name}</div>
@@ -1281,16 +1256,21 @@ function renderDraw() {
           </div>
           ${teamContent}
         </div>
+        <canvas class="scratch-canvas"></canvas>
       </div>`;
   }).join('');
 
   document.getElementById('draw-content').innerHTML = `
     <div class="draw-controls">
       <div style="font-size:13px;color:var(--c-text-2)">${realParticipants.length} participants · ${tpp} team${tpp>1?'s':''} each</div>
-      <button class="reveal-all-btn" onclick="revealAll(${draw.id})">reveal all</button>
+      <button class="reveal-all-btn" onclick="revealAll()">reveal all</button>
     </div>
     <div class="draw-grid">${cards}</div>
   `;
+  // Initialise canvas scratch on each card (after they are in the DOM)
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.scratch-card').forEach(initScratchCanvas);
+  });
 }
 
 function setActiveDrawTab(idx) {
@@ -1298,12 +1278,128 @@ function setActiveDrawTab(idx) {
   renderDraw();
 }
 
-function revealCard(cardId) {
-  document.getElementById(cardId)?.classList.add('revealed');
+// ── Scratch-card canvas logic ─────────────────────────────────────────────────
+const GREEN_PARTICLES = ['#C3FF56','#a8e040','#d4ff8a','#8bc320','#eaffb3','#ffffff'];
+const GREY_PARTICLES  = ['#cccccc','#aaaaaa','#eeeeee','#999999','#ffffff'];
+
+function initScratchCanvas(card) {
+  if (card.dataset.scratchInit) return;
+  card.dataset.scratchInit = '1';
+
+  const sc = card.querySelector('.scratch-canvas');
+  if (!sc) return;
+  if (card.classList.contains('revealed')) { sc.classList.add('hidden'); return; }
+
+  const rect = card.getBoundingClientRect();
+  const W = sc.width  = Math.round(rect.width  || card.offsetWidth  || 180);
+  const H = sc.height = Math.round(rect.height || card.offsetHeight || 110);
+  const ctx = sc.getContext('2d');
+
+  // Particle canvas — sibling to scratch canvas, pointer-events:none
+  const pc = document.createElement('canvas');
+  pc.width = W; pc.height = H;
+  pc.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:3;';
+  card.appendChild(pc);
+  const pctx = pc.getContext('2d');
+
+  // All user cards are anyway green; CPU cards grey
+  const isCpu = card.dataset.cpu === 'true';
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  if (isCpu) { grad.addColorStop(0,'#999'); grad.addColorStop(1,'#666'); }
+  else       { grad.addColorStop(0,'#C3FF56'); grad.addColorStop(1,'#a8e040'); }
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  const name = card.dataset.name || '';
+  ctx.fillStyle = isCpu ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.85)';
+  ctx.font = '600 14px "DM Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(name, W / 2, H / 2 - 10, W - 24);
+  ctx.fillStyle = isCpu ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.4)';
+  ctx.font = '11px "DM Sans", sans-serif';
+  ctx.fillText('scratch to reveal', W / 2, H / 2 + 10);
+
+  const palette = isCpu ? GREY_PARTICLES : GREEN_PARTICLES;
+  const particles = [];
+  let animId = null;
+
+  function spawnParticles(x, y) {
+    for (let i = 0; i < 6; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1 + Math.random() * 2.5;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.2,
+        alpha: 0.85 + Math.random() * 0.15,
+        size: 1.5 + Math.random() * 2.5,
+        color: palette[Math.floor(Math.random() * palette.length)]
+      });
+    }
+    if (!animId) tick();
+  }
+
+  function tick() {
+    pctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.12;
+      p.alpha -= 0.03;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      pctx.globalAlpha = p.alpha;
+      pctx.fillStyle = p.color;
+      pctx.beginPath();
+      pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      pctx.fill();
+    }
+    pctx.globalAlpha = 1;
+    animId = particles.length > 0 ? requestAnimationFrame(tick) : null;
+  }
+
+  let isDown = false;
+
+  function getXY(e) {
+    const r = sc.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX - r.left, src.clientY - r.top];
+  }
+
+  function scratchAt(x, y) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    spawnParticles(x, y);
+    const data = ctx.getImageData(0, 0, W, H).data;
+    let cleared = 0;
+    for (let i = 3; i < data.length; i += 4) { if (data[i] < 128) cleared++; }
+    if (cleared / (W * H) > 0.75) fullyReveal(card, sc, pc);
+  }
+
+  sc.addEventListener('mousedown',  e => { isDown = true;  scratchAt(...getXY(e)); });
+  sc.addEventListener('mousemove',  e => { if (isDown) scratchAt(...getXY(e)); });
+  sc.addEventListener('mouseup',    () => isDown = false);
+  sc.addEventListener('mouseleave', () => isDown = false);
+  sc.addEventListener('touchstart', e => { e.preventDefault(); isDown = true;  scratchAt(...getXY(e)); }, {passive:false});
+  sc.addEventListener('touchmove',  e => { e.preventDefault(); if (isDown) scratchAt(...getXY(e)); }, {passive:false});
+  sc.addEventListener('touchend',   () => isDown = false);
 }
 
-function revealAll(drawId) {
-  document.querySelectorAll('.scratch-card').forEach(c => c.classList.add('revealed'));
+function fullyReveal(card, sc, pc) {
+  card.classList.add('revealed');
+  if (sc) sc.classList.add('hidden');
+  if (pc) pc.style.display = 'none';
+}
+
+function revealAll() {
+  document.querySelectorAll('.scratch-card:not(.revealed)').forEach(card => {
+    const sc = card.querySelector('.scratch-canvas');
+    const pc = card.querySelector('canvas:not(.scratch-canvas)');
+    fullyReveal(card, sc, pc);
+  });
 }
 
 // --- GROUPS ---
