@@ -1,0 +1,22 @@
+<svg viewBox="0 0 80 110" xmlns="http://www.w3.org/2000/svg" width="80" height="110">
+  <!-- Trophy cup body -->
+  <path d="M28 55 C20 55 14 47 14 38 L14 30 L66 30 L66 38 C66 47 60 55 52 55 Z" fill="#c8a020" stroke="#a07010" stroke-width="1.5"/>
+  <!-- Trophy handles -->
+  <path d="M14 35 C6 35 4 28 8 26 C12 24 14 30 14 32" fill="none" stroke="#c8a020" stroke-width="4" stroke-linecap="round"/>
+  <path d="M66 35 C74 35 76 28 72 26 C68 24 66 30 66 32" fill="none" stroke="#c8a020" stroke-width="4" stroke-linecap="round"/>
+  <!-- Trophy stem -->
+  <rect x="35" y="55" width="10" height="16" fill="#c8a020" rx="1"/>
+  <!-- Trophy base -->
+  <rect x="24" y="70" width="32" height="8" rx="4" fill="#c8a020" stroke="#a07010" stroke-width="1"/>
+  <rect x="20" y="76" width="40" height="6" rx="3" fill="#0e5c2a" stroke="#0a4a22" stroke-width="1"/>
+  <!-- Blinky face (green circle) -->
+  <circle cx="40" cy="20" r="18" fill="#3ddc84"/>
+  <!-- Eyes -->
+  <ellipse cx="33" cy="17" rx="4" ry="4.5" fill="#0a0a0f"/>
+  <ellipse cx="47" cy="17" rx="4" ry="4.5" fill="#0a0a0f"/>
+  <!-- Eye shine -->
+  <circle cx="35" cy="15.5" r="1.2" fill="rgba(255,255,255,0.5)"/>
+  <circle cx="49" cy="15.5" r="1.2" fill="rgba(255,255,255,0.5)"/>
+  <!-- Smile -->
+  <path d="M33 24 Q40 30 47 24" stroke="#0a0a0f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

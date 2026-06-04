@@ -7,18 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:      #0d0d10;
-      --surf:    #17171e;
-      --surf2:   #1f1f28;
-      --bord:    #2a2a36;
-      --text:    #f0f0f6;
-      --muted:   #777788;
-      --green:   #00e676;
-      --pink:    #ff2d78;
+      --bg:      #0e0e13;
+      --surf:    #16161f;
+      --surf2:   #1e1e2a;
+      --bord:    #26263a;
+      --text:    #eeeef8;
+      --muted:   #9898b8;
+      --green:   #3ddc84;
+      --pink:    #3ddc84;
       --yellow:  #ffd700;
       --blue:    #4fc3f7;
-      --orange:  #ff7043;
-      --purple:  #ce93d8;
+      --orange:  #ffb300;
+      --purple:  #c084fc;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { font-size: 14px; }
@@ -27,17 +27,26 @@
     /* ── HERO ── */
     .hero {
       text-align: center;
-      padding: 2.5rem 1rem 2rem;
-      background: radial-gradient(ellipse at 50% -10%, rgba(0,230,118,.14) 0%, transparent 60%);
+      padding: 2rem 1rem 1.5rem;
+      background: radial-gradient(ellipse at 50% -10%, rgba(61,220,132,.1) 0%, transparent 60%);
       position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
     }
-    .hero-eyebrow { font-family:'Bebas Neue',sans-serif; letter-spacing:.4em; font-size:11px; color:var(--green); margin-bottom:.4rem; }
-    .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.8rem,8vw,5.5rem); line-height:.88; letter-spacing:.02em; }
-    .hero-title .pink { color:var(--pink); }
-    .hero-meta { margin-top:.85rem; font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+    .hero-brand {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+    }
+    .hero-brand-logo { width: 44px; height: 60px; object-fit: contain; }
+    .hero-brand-name { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.25em; color:var(--green); }
+    .hero-eyebrow { font-family:'Bebas Neue',sans-serif; letter-spacing:.4em; font-size:11px; color:var(--muted); margin-bottom:.2rem; }
+    .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.6rem,7vw,5rem); line-height:.9; letter-spacing:.02em; }
+    .hero-title .pink { color:var(--green); }
+    .hero-meta { margin-top:.7rem; font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
     .preview-tag {
-      display:inline-block; margin-top:.6rem;
-      background:rgba(255,215,0,.12); border:1px solid rgba(255,215,0,.3);
+      display:inline-block; margin-top:.5rem;
+      background:rgba(255,215,0,.1); border:1px solid rgba(255,215,0,.25);
       color:var(--yellow); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
       padding:3px 10px; border-radius:20px;
     }
@@ -58,7 +67,7 @@
     .gc-hdr {
       padding:5px 9px;
       font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:.15em;
-      color:rgba(0,0,0,.85);
+      color:#0a0a0f;
     }
     .gc-body { background:var(--surf); }
     .gc-row {
@@ -86,8 +95,8 @@
     /* one round column */
     .b-col { flex:1; display:flex; flex-direction:column; min-width:130px; }
     .b-col-lbl {
-      font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.15em;
-      text-align:center; color:var(--pink);
+      font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:.18em;
+      text-align:center; color:var(--green);
       padding:6px 4px 8px; border-bottom:1px solid var(--bord);
     }
     .b-col-matches {
@@ -200,7 +209,11 @@
 <body>
 
 <div class="hero">
-  <div class="hero-eyebrow">Anyway · FIFA World Cup 2026</div>
+  <div class="hero-brand">
+    <img src="./blinky_worldcup.png" alt="Anyway" class="hero-brand-logo" onerror="this.style.display='none'">
+    <span class="hero-brand-name">Anyway</span>
+  </div>
+  <div class="hero-eyebrow">FIFA World Cup 2026</div>
   <div class="hero-title">World Cup <span class="pink">Sweep&shy;stakes</span><br>2026</div>
   <div class="hero-meta">🌎 USA · Canada · Mexico &nbsp;·&nbsp; 48 teams &nbsp;·&nbsp; 12 groups</div>
   <div class="preview-tag">👀 Preview — placeholder data</div>

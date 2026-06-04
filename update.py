@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 # CONFIGURATION — edit this section
 # =============================================================================
 
-API_KEY = "YOUR_API_KEY_HERE"   # paste your football-data.org key here
+API_KEY = "2e8ba5435dcf412e8610c6e6a7ab7084"   # paste your football-data.org key here
 COMPETITION_CODE = "WC"         # World Cup code — don't change this
 OUTPUT_FILE = "data.js"         # where to write the data — don't change this
 
