@@ -606,6 +606,90 @@
       .nav-tab span { display: none; }
       .groups-grid { grid-template-columns: 1fr; }
     }
+
+    /* ═══════════════════════════════════════
+       DARK BRACKET TAB
+       ═══════════════════════════════════════ */
+    #tab-bracket {
+      background: #0d0d10;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1rem 2rem;
+      margin: 0 -0.25rem;
+    }
+    .bkt-outer { overflow-x: auto; padding-bottom: .5rem; }
+    .bkt {
+      display: flex; align-items: stretch;
+      min-width: 920px; max-width: 1400px; margin: 0 auto;
+    }
+    .bkt-half { flex: 1; display: flex; }
+    .bkt-half.right { flex-direction: row-reverse; }
+    .bkt-col { flex: 1; display: flex; flex-direction: column; min-width: 118px; }
+    .bkt-col-lbl {
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; text-align: center;
+      color: #ff2d78; padding: 5px 4px 8px;
+      border-bottom: 1px solid #2a2a36;
+    }
+    .bkt-col-matches {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: space-around; padding: 6px 0;
+    }
+    .bkt-pair { flex: 1; display: flex; flex-direction: column; position: relative; }
+    .bkt-half.left  .bkt-pair::after { content:''; position:absolute; right:5px; top:25%; height:50%; border-right:2px solid #2a2a36; }
+    .bkt-half.right .bkt-pair::after { content:''; position:absolute; left:5px;  top:25%; height:50%; border-left:2px solid #2a2a36; }
+    .bkt-slot { flex: 1; display: flex; align-items: center; position: relative; }
+    .bkt-half.left  .bkt-slot { padding: 3px 18px 3px 4px; }
+    .bkt-half.left  .bkt-slot::after { content:''; position:absolute; right:5px; top:50%; width:13px; border-top:2px solid #2a2a36; }
+    .bkt-half.right .bkt-slot { padding: 3px 4px 3px 18px; }
+    .bkt-half.right .bkt-slot::after { content:''; position:absolute; left:5px;  top:50%; width:13px; border-top:2px solid #2a2a36; }
+    .bkt-half.left  .bkt-col:last-child .bkt-slot { padding-right: 4px; }
+    .bkt-half.left  .bkt-col:last-child .bkt-slot::after { display: none; }
+    .bkt-half.right .bkt-col:last-child .bkt-slot { padding-left: 4px; }
+    .bkt-half.right .bkt-col:last-child .bkt-slot::after { display: none; }
+    .bkt-match {
+      width: 100%; background: #17171e;
+      border: 1px solid #2a2a36; border-radius: 7px; overflow: hidden;
+    }
+    .bkt-team { display: flex; align-items: center; gap: 4px; padding: 5px 7px; flex-wrap: nowrap; }
+    .bkt-team + .bkt-team { border-top: 1px solid #2a2a36; }
+    .bkt-team.w { background: rgba(0,230,118,.1); }
+    .bkt-team.w .bkt-tname { color: #00e676; font-weight: 600; }
+    .bkt-flag { font-size: 13px; flex-shrink: 0; line-height: 1; }
+    .bkt-tname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #666688; font-size: 11px; }
+    .bkt-score { font-weight: 700; font-size: 12px; color: #f0f0f6; font-family: monospace; min-width: 12px; text-align: center; flex-shrink: 0; }
+    .bkt-match.tbd .bkt-tname { color: rgba(255,255,255,.15); font-style: italic; }
+    .bkt-match.tbd .bkt-flag  { opacity: .2; }
+    .bkt-owner {
+      font-size: 9px; font-weight: 700;
+      padding: 1px 5px; border-radius: 10px;
+      flex-shrink: 0; white-space: nowrap; margin-left: 1px;
+    }
+    .bkt-final-col {
+      min-width: 148px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; padding: 0 6px;
+    }
+    .bkt-final-trophy { font-size: 2rem; filter: drop-shadow(0 0 14px rgba(255,215,0,.55)); }
+    .bkt-final-title {
+      font-size: 1.1rem; font-weight: 700; letter-spacing: .04em;
+      color: #ffd700; text-align: center;
+      text-shadow: 0 0 20px rgba(255,215,0,.4);
+    }
+    .bkt-final-match { width: 100%; }
+    .bkt-final-match .bkt-match { background: #1c1a07; border-color: rgba(255,215,0,.35); }
+    .bkt-winner-box {
+      width: 100%; text-align: center; padding: 10px 8px;
+      background: rgba(0,230,118,.07);
+      border: 1.5px solid #00e676; border-radius: 8px;
+    }
+    .bkt-winner-lbl { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #00e676; }
+    .bkt-winner-val { font-size: 11px; color: rgba(255,255,255,.3); font-style: italic; margin-top: 3px; }
+    .bkt-empty { text-align: center; padding: 3rem 1rem; color: #444455; font-size: 13px; }
+    .bkt-empty-icon { font-size: 2rem; margin-bottom: 8px; }
+    .bkt-notice {
+      background: rgba(31,105,198,.15); border: 1px solid rgba(79,195,247,.25);
+      border-radius: 10px; padding: .75rem 1.25rem;
+      font-size: 12px; color: #4fc3f7; margin-bottom: 1.25rem;
+    }
   </style>
 </head>
 <body>
@@ -673,10 +757,8 @@
 
   <!-- BRACKET -->
   <section id="tab-bracket" class="section">
-    <div class="bracket-wrap">
-      <div class="bracket" id="bracket-view">
-        <div class="empty" style="min-width:100%"><div class="empty-icon">🔢</div>Bracket appears once knockout stage begins (June 28)</div>
-      </div>
+    <div id="bracket-view"></div>
+    <div style="display:none">
     </div>
   </section>
 
@@ -1225,64 +1307,146 @@ function renderGroups() {
 
 // --- BRACKET ---
 function renderBracket() {
-  const matches = apiData.matches || [];
-  const knockoutMatches = matches.filter(m => {
-    const stage = (m.stage||'').toUpperCase();
-    return ['LAST_16','ROUND_OF_16','QUARTER_FINALS','SEMI_FINALS','THIRD_PLACE','FINAL'].includes(stage);
-  });
-
   const container = document.getElementById('bracket-view');
-  if (!knockoutMatches.length) {
-    container.innerHTML = `<div class="empty" style="min-width:100%"><div class="empty-icon">🔢</div>Bracket appears once knockout stage begins (June 28, 2026 AEST)</div>`;
-    return;
+  const matches = apiData.matches || [];
+
+  // ── Ownership helpers ──────────────────────────────────────────
+  const allParticipants = (MANUAL_DATA.draws||[]).flatMap(d => d.participants||[]);
+  function getOwner(teamName) {
+    if (!teamName) return null;
+    return allParticipants.find(p => !p.cpu && p.teams && p.teams.includes(teamName)) || null;
+  }
+  function ownerBadge(teamName) {
+    const p = getOwner(teamName);
+    if (!p) return '';
+    const idx = allParticipants.indexOf(p);
+    const [bg, fg] = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+    const initials = p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    return `<span class="bkt-owner" style="background:${bg};color:${fg}">${initials}</span>`;
   }
 
-  // Get all teams assigned to current user's draws (for highlighting)
-  const myTeams = new Set((MANUAL_DATA.draws||[]).flatMap(d =>
-    (d.participants||[]).flatMap(p => p.teams||[])
-  ));
-
-  const rounds = [
-    { key:'LAST_16', label:'Round of 32' },
-    { key:'QUARTER_FINALS', label:'Quarter-finals' },
-    { key:'SEMI_FINALS', label:'Semi-finals' },
-    { key:'FINAL', label:'Final' },
-  ];
-
-  const matchBox = (m) => {
-    if (!m) return `<div class="bracket-match"><div class="bracket-team bracket-tbd"><span>TBD</span></div><div class="bracket-team bracket-tbd"><span>TBD</span></div></div>`;
-    const h = normaliseTeamName(m.homeTeam?.name);
-    const a = normaliseTeamName(m.awayTeam?.name);
-    const hs = m.score?.fullTime?.home ?? m.score?.regularTime?.home;
-    const as_ = m.score?.fullTime?.away ?? m.score?.regularTime?.away;
-    const finished = m.status === 'FINISHED';
-    const hWin = finished && hs != null && hs > as_;
-    const aWin = finished && as_ != null && as_ > hs;
-    const hMine = myTeams.has(h) ? 'my-team' : '';
-    const aMine = myTeams.has(a) ? 'my-team' : '';
-    return `<div class="bracket-match">
-      <div class="bracket-match-time">${formatMatchTime(m.utcDate)}</div>
-      <div class="bracket-team ${hWin?'winner':''} ${hMine}">
-        <span class="bracket-team-name">${h ? teamFlag(h)+' '+h : 'TBD'}</span>
-        <span class="bracket-score">${hs!=null?hs:''}</span>
-      </div>
-      <div class="bracket-team ${aWin?'winner':''} ${aMine}">
-        <span class="bracket-team-name">${a ? teamFlag(a)+' '+a : 'TBD'}</span>
-        <span class="bracket-score">${as_!=null?as_:''}</span>
-      </div>
-    </div>`;
+  // ── Sort matches into rounds ────────────────────────────────────
+  // 2026 WC stages (football-data.org naming may vary; handle both old and new)
+  const stageKey = s => {
+    const u = (s||'').toUpperCase();
+    if (['LAST_32','ROUND_OF_32'].includes(u))              return 'r32';
+    if (['LAST_16','ROUND_OF_16'].includes(u))              return 'r16';
+    if (['QUARTER_FINALS','LAST_8'].includes(u))            return 'qf';
+    if (['SEMI_FINALS','LAST_4'].includes(u))               return 'sf';
+    if (u === 'FINAL')                                      return 'final';
+    if (u === 'THIRD_PLACE')                                return '3rd';
+    return null;
   };
+  const byRound = { r32:[], r16:[], qf:[], sf:[], final:[], '3rd':[] };
+  matches.forEach(m => {
+    const k = stageKey(m.stage);
+    if (k) byRound[k].push(m);
+  });
+  const hasKnockout = Object.values(byRound).some(r => r.length > 0);
 
-  const html = rounds.map(r => {
-    const rMatches = knockoutMatches.filter(m => (m.stage||'').toUpperCase() === r.key || (r.key==='LAST_16' && (m.stage||'').toUpperCase()==='ROUND_OF_16'));
-    const slots = rMatches.map(m => matchBox(m)).join('');
-    return `<div class="bracket-round">
-      <div class="bracket-round-label">${r.label}</div>
-      <div class="bracket-slots">${slots}</div>
+  // ── Match card ─────────────────────────────────────────────────
+  function matchCard(m) {
+    if (!m || !m.homeTeam) return `
+      <div class="bkt-match tbd">
+        <div class="bkt-team"><span class="bkt-flag">🏳️</span><span class="bkt-tname">TBD</span></div>
+        <div class="bkt-team"><span class="bkt-flag">🏳️</span><span class="bkt-tname">TBD</span></div>
+      </div>`;
+    const h  = normaliseTeamName(m.homeTeam?.name);
+    const a  = normaliseTeamName(m.awayTeam?.name);
+    const hs = m.score?.fullTime?.home ?? m.score?.regularTime?.home;
+    const as_= m.score?.fullTime?.away ?? m.score?.regularTime?.away;
+    const done = m.status === 'FINISHED';
+    const hWin = done && hs != null && hs > as_;
+    const aWin = done && as_!= null && as_ > hs;
+    return `<div class="bkt-match">
+      <div class="bkt-team ${hWin?'w':''}">
+        <span class="bkt-flag">${teamFlag(h)||'🏳️'}</span>
+        <span class="bkt-tname">${h||'TBD'}</span>
+        ${ownerBadge(h)}
+        ${done ? `<span class="bkt-score">${hs}</span>` : ''}
+      </div>
+      <div class="bkt-team ${aWin?'w':''}">
+        <span class="bkt-flag">${teamFlag(a)||'🏳️'}</span>
+        <span class="bkt-tname">${a||'TBD'}</span>
+        ${ownerBadge(a)}
+        ${done ? `<span class="bkt-score">${as_}</span>` : ''}
+      </div>
     </div>`;
-  }).join('');
+  }
 
-  container.innerHTML = html;
+  // ── Round column ───────────────────────────────────────────────
+  function roundCol(label, roundMatches, slots) {
+    const items = Array.from({length: slots}, (_, i) => roundMatches[i] || null);
+    if (slots === 1) return `
+      <div class="bkt-col">
+        <div class="bkt-col-lbl">${label}</div>
+        <div class="bkt-col-matches">
+          <div class="bkt-pair"><div class="bkt-slot">${matchCard(items[0])}</div></div>
+        </div>
+      </div>`;
+    const pairs = [];
+    for (let i = 0; i < items.length; i += 2)
+      pairs.push([items[i], items[i+1]]);
+    return `<div class="bkt-col">
+      <div class="bkt-col-lbl">${label}</div>
+      <div class="bkt-col-matches">
+        ${pairs.map(([m1,m2]) => `
+        <div class="bkt-pair">
+          <div class="bkt-slot">${matchCard(m1)}</div>
+          <div class="bkt-slot">${matchCard(m2)}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // ── Winner banner ──────────────────────────────────────────────
+  let winnerHtml = '<div class="bkt-winner-val">TBD</div>';
+  const fin = byRound.final[0];
+  if (fin && fin.status === 'FINISHED') {
+    const h  = normaliseTeamName(fin.homeTeam?.name);
+    const a  = normaliseTeamName(fin.awayTeam?.name);
+    const hs = fin.score?.fullTime?.home ?? 0;
+    const as_= fin.score?.fullTime?.away ?? 0;
+    const w  = hs >= as_ ? h : a;
+    const p  = getOwner(w);
+    winnerHtml = `<div class="bkt-winner-val">${teamFlag(w)} ${w}${p ? `<br><span style="color:#00e676;font-style:normal;font-weight:600">${p.name}</span>` : ''}</div>`;
+  }
+
+  // ── Notice when no knockout data yet ──────────────────────────
+  const notice = hasKnockout ? '' : `
+    <div class="bkt-notice">
+      ⚽ Group stage underway — bracket fills in from <strong>28 June 2026</strong>.
+      Run <code>update.py</code> after each round to keep it live.
+    </div>`;
+
+  // ── Assemble ───────────────────────────────────────────────────
+  container.innerHTML = `
+    ${notice}
+    <div class="bkt-outer">
+      <div class="bkt">
+        <div class="bkt-half left">
+          ${roundCol('Round of 32',  byRound.r32.slice(0, 8),  8)}
+          ${roundCol('Round of 16',  byRound.r16.slice(0, 4),  4)}
+          ${roundCol('Quarter-final',byRound.qf.slice(0,  2),  2)}
+          ${roundCol('Semi-final',   byRound.sf.slice(0,  1),  1)}
+        </div>
+        <div class="bkt-final-col">
+          <div class="bkt-final-trophy">🏆</div>
+          <div class="bkt-final-title">The Final</div>
+          <div class="bkt-final-match">${matchCard(fin || null)}</div>
+          <div class="bkt-winner-box">
+            <div class="bkt-winner-lbl">🥇 Winner</div>
+            ${winnerHtml}
+          </div>
+        </div>
+        <div class="bkt-half right">
+          ${roundCol('Round of 32',  byRound.r32.slice(8, 16), 8)}
+          ${roundCol('Round of 16',  byRound.r16.slice(4,  8), 4)}
+          ${roundCol('Quarter-final',byRound.qf.slice(2,  4),  2)}
+          ${roundCol('Semi-final',   byRound.sf.slice(1,  2),  1)}
+        </div>
+      </div>
+    </div>`;
 }
 
 // --- PRIZES ---
