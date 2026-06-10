@@ -13,11 +13,11 @@ const MANUAL_DATA = {
   // ---------------------------------------------------------------------------
   config: {
     sweepstakesName: "World Cup 2026 Sweepstakes",
-    entryFee: 20,              // in dollars — change to your currency/amount
+    entryFee: 10,              // in dollars — change to your currency/amount
     teamsPerPerson: 2,         // 1, 2, or 3 — decide based on sign-up numbers
     currency: "$",
     timezone: "Australia/Sydney",  // for displaying match times
-    drawDone: false,           // set to true after you run the draw
+    drawDone: true,           // set to true after you run the draw
   },
 
   // ---------------------------------------------------------------------------
@@ -29,17 +29,31 @@ const MANUAL_DATA = {
   // cpu: true means this is a placeholder slot (never wins prizes)
   // ---------------------------------------------------------------------------
   draws: [
-    {
-      id: 1,
-      name: "Draw 1",
-      participants: [
-        // { id: 1, name: "Sarah Chen",    entry: "paid",     charity: "",             teams: [] },
-        // { id: 2, name: "Tom Richards",  entry: "bragging", charity: "",             teams: [] },
-        // { id: 3, name: "Priya Sharma",  entry: "charity",  charity: "Red Cross",    teams: [] },
-        // { id: 4, name: "James O'Brien", entry: "paid",     charity: "",             teams: [] },
-        // Add more participants here, one line each
-      ]
-    },
+    // Paste into data_manual.js → draws[0].participants, then set drawDone: true
+  { id: 1, name: "Lochie", entry: "paid", charity: "", teams: ["Croatia","Qatar"] },
+  { id: 2, name: "Kaye", entry: "paid", charity: "", teams: ["Switzerland","Algeria"] },
+  { id: 3, name: "James", entry: "paid", charity: "", teams: ["Japan","Czechia"] },
+  { id: 4, name: "Ham", entry: "paid", charity: "", teams: ["Senegal","New Zealand"] },
+  { id: 5, name: "Tash", entry: "paid", charity: "", teams: ["France","Egypt"] },
+  { id: 6, name: "Ari", entry: "paid", charity: "", teams: ["Brazil","Haiti"] },
+  { id: 7, name: "Laura", entry: "paid", charity: "", teams: ["Netherlands","Curaçao"] },
+  { id: 8, name: "Han C", entry: "paid", charity: "", teams: ["Mexico","Panama"] },
+  { id: 9, name: "Joseph", entry: "paid", charity: "", teams: ["Germany","Ghana"] },
+  { id: 10, name: "Brae", entry: "paid", charity: "", teams: ["Türkiye","Cabo Verde"] },
+  { id: 11, name: "Mik", entry: "paid", charity: "", teams: ["Norway","Australia"] },
+  { id: 12, name: "Emma C", entry: "paid", charity: "", teams: ["Uruguay","Iraq"] },
+  { id: 13, name: "John", entry: "paid", charity: "", teams: ["United States","Paraguay"] },
+  { id: 14, name: "Chai", entry: "paid", charity: "", teams: ["Ecuador","Jordan"] },
+  { id: 15, name: "Mandy", entry: "paid", charity: "", teams: ["Austria","Scotland"] },
+  { id: 16, name: "Nick C", entry: "paid", charity: "", teams: ["Sweden","Iran"] },
+  { id: 17, name: "Sirish", entry: "paid", charity: "", teams: ["Portugal","Tunisia"] },
+  { id: 18, name: "Kevin Mario", entry: "paid", charity: "", teams: ["Canada","Saudi Arabia"] },
+  { id: 19, name: "Allana", entry: "paid", charity: "", teams: ["Morocco","Korea Republic"] },
+  { id: 20, name: "Jordana", entry: "paid", charity: "", teams: ["Argentina","Ivory Coast"] },
+  { id: 21, name: "Clauds", entry: "paid", charity: "", teams: ["Belgium","Uzbekistan"] },
+  { id: 22, name: "Pirow", entry: "paid", charity: "", teams: ["England","Bosnia-Herzegovina"] },
+  { id: 23, name: "Phoebe", entry: "paid", charity: "", teams: ["Spain","DR Congo"] },
+  { id: 24, name: "Praz", entry: "paid", charity: "", teams: ["Colombia","South Africa"] },
     // If you get more than 48 paid entries, uncomment and fill Draw 2:
     // {
     //   id: 2,
@@ -51,18 +65,38 @@ const MANUAL_DATA = {
   ],
 
   // ---------------------------------------------------------------------------
-  // SPECIAL AWARDS
-  // Set these once a winner becomes clear during the tournament.
-  // Use the exact team name as it appears in the standings.
+  // TEAM TIERS FOR DRAW
+  // Teams split into two halves by odds. The draw assigns each person one team
+  // from tier1 (favourites) and one from tier2 (underdogs).
+  // Order within each tier doesn't matter — they get shuffled at draw time.
+  // Names must match exactly as they appear in ALL_TEAMS in index.html.
   // ---------------------------------------------------------------------------
-  goldenBoot: {
-    team: null,           // e.g. "Brazil" — whose squad's player is top scorer
-    playerName: null,     // e.g. "Vinícius Jr." — for display only
+  teamTiers: {
+    tier1: [
+      // Pool A
+      "Spain", "France", "England", "Portugal",
+      "Argentina", "Brazil", "Germany", "Netherlands",
+      "Belgium", "Colombia", "Japan", "Norway",
+      "Morocco", "United States", "Mexico", "Uruguay",
+      "Switzerland", "Croatia", "Ecuador", "Austria",
+      "Türkiye", "Senegal", "Sweden", "Canada",
+    ],
+    tier2: [
+      // Pool B
+      "Paraguay", "Scotland", "Ivory Coast", "Algeria",
+      "Bosnia-Herzegovina", "Egypt", "Iran", "Tunisia",
+      "Australia", "Cabo Verde", "Curaçao", "Czechia",
+      "DR Congo", "Ghana", "Haiti", "Iraq",
+      "Jordan", "New Zealand", "Panama", "Qatar",
+      "Saudi Arabia", "South Africa", "Korea Republic", "Uzbekistan",
+    ],
   },
-  goldenGlove: {
-    team: null,           // e.g. "France" — whose squad's GK won it
-    playerName: null,     // e.g. "Mike Maignan" — for display only
-  },
+
+  // ---------------------------------------------------------------------------
+  // WOODEN SPOON
+  // Auto-calculated from group stage standings — no manual entry needed.
+  // Goes to whoever drew the team with the lowest points (then worst GD).
+  // ---------------------------------------------------------------------------
 
   // ---------------------------------------------------------------------------
   // MATCH OVERRIDES

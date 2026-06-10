@@ -366,6 +366,82 @@
     }
 
     /* =========================================================
+       DRAW — pre-draw & results UI
+       ========================================================= */
+    .tier-draw-panel {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .tier-draw-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    .tier-draw-panel p {
+      font-size: 13px;
+      color: var(--c-text-2);
+      margin-bottom: 1.25rem;
+    }
+    .tier-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .tier-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .tier-badge-1 { background: var(--c-gold-light); color: var(--c-gold); border: 1px solid var(--c-gold); }
+    .tier-badge-2 { background: var(--c-blue-light); color: var(--c-blue); border: 1px solid var(--c-blue); }
+    .draw-snippet-wrap {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .draw-snippet-wrap h3 {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .draw-snippet {
+      background: var(--c-bg);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--c-text-2);
+      white-space: pre;
+      overflow-x: auto;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .draw-snippet-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 0.75rem;
+      align-items: center;
+    }
+    .copy-feedback {
+      font-size: 12px;
+      color: var(--c-accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .copy-feedback.show { opacity: 1; }
+
+    /* =========================================================
        GROUPS TAB
        ========================================================= */
     .groups-grid {
@@ -822,27 +898,27 @@ const ALL_TEAMS = [
   {name:"Haiti",group:"C",flag:"🇭🇹"},{name:"Scotland",group:"C",flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿"},
   {name:"United States",group:"D",flag:"🇺🇸"},{name:"Paraguay",group:"D",flag:"🇵🇾"},
   {name:"Australia",group:"D",flag:"🇦🇺"},{name:"Türkiye",group:"D",flag:"🇹🇷"},
-  {name:"Germany",group:"E",flag:"🇩🇪"},{name:"Japan",group:"E",flag:"🇯🇵"},
-  {name:"Chile",group:"E",flag:"🇨🇱"},{name:"Belgium",group:"E",flag:"🇧🇪"},
-  {name:"Argentina",group:"F",flag:"🇦🇷"},{name:"Nigeria",group:"F",flag:"🇳🇬"},
-  {name:"Ukraine",group:"F",flag:"🇺🇦"},{name:"Ecuador",group:"F",flag:"🇪🇨"},
-  {name:"Portugal",group:"G",flag:"🇵🇹"},{name:"Colombia",group:"G",flag:"🇨🇴"},
-  {name:"DR Congo",group:"G",flag:"🇨🇩"},{name:"Uzbekistan",group:"G",flag:"🇺🇿"},
-  {name:"France",group:"H",flag:"🇫🇷"},{name:"Iran",group:"H",flag:"🇮🇷"},
-  {name:"Senegal",group:"H",flag:"🇸🇳"},{name:"Denmark",group:"H",flag:"🇩🇰"},
-  {name:"Spain",group:"I",flag:"🇪🇸"},{name:"Cabo Verde",group:"I",flag:"🇨🇻"},
-  {name:"Saudi Arabia",group:"I",flag:"🇸🇦"},{name:"New Zealand",group:"I",flag:"🇳🇿"},
-  {name:"Netherlands",group:"J",flag:"🇳🇱"},{name:"Peru",group:"J",flag:"🇵🇪"},
-  {name:"Serbia",group:"J",flag:"🇷🇸"},{name:"Cuba",group:"J",flag:"🇨🇺"},
-  {name:"Uruguay",group:"K",flag:"🇺🇾"},{name:"Egypt",group:"K",flag:"🇪🇬"},
-  {name:"Venezuela",group:"K",flag:"🇻🇪"},{name:"Curaçao",group:"K",flag:"🇨🇼"},
+  {name:"Germany",group:"E",flag:"🇩🇪"},{name:"Curaçao",group:"E",flag:"🇨🇼"},
+  {name:"Ivory Coast",group:"E",flag:"🇨🇮"},{name:"Ecuador",group:"E",flag:"🇪🇨"},
+  {name:"Netherlands",group:"F",flag:"🇳🇱"},{name:"Japan",group:"F",flag:"🇯🇵"},
+  {name:"Sweden",group:"F",flag:"🇸🇪"},{name:"Tunisia",group:"F",flag:"🇹🇳"},
+  {name:"Belgium",group:"G",flag:"🇧🇪"},{name:"Egypt",group:"G",flag:"🇪🇬"},
+  {name:"Iran",group:"G",flag:"🇮🇷"},{name:"New Zealand",group:"G",flag:"🇳🇿"},
+  {name:"Spain",group:"H",flag:"🇪🇸"},{name:"Cabo Verde",group:"H",flag:"🇨🇻"},
+  {name:"Saudi Arabia",group:"H",flag:"🇸🇦"},{name:"Uruguay",group:"H",flag:"🇺🇾"},
+  {name:"France",group:"I",flag:"🇫🇷"},{name:"Senegal",group:"I",flag:"🇸🇳"},
+  {name:"Iraq",group:"I",flag:"🇮🇶"},{name:"Norway",group:"I",flag:"🇳🇴"},
+  {name:"Argentina",group:"J",flag:"🇦🇷"},{name:"Algeria",group:"J",flag:"🇩🇿"},
+  {name:"Austria",group:"J",flag:"🇦🇹"},{name:"Jordan",group:"J",flag:"🇯🇴"},
+  {name:"Portugal",group:"K",flag:"🇵🇹"},{name:"DR Congo",group:"K",flag:"🇨🇩"},
+  {name:"Uzbekistan",group:"K",flag:"🇺🇿"},{name:"Colombia",group:"K",flag:"🇨🇴"},
   {name:"England",group:"L",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},{name:"Croatia",group:"L",flag:"🇭🇷"},
-  {name:"Cameroon",group:"L",flag:"🇨🇲"},{name:"Jordan",group:"L",flag:"🇯🇴"},
+  {name:"Ghana",group:"L",flag:"🇬🇭"},{name:"Panama",group:"L",flag:"🇵🇦"},
 ];
 
 const ROUND_POINTS = { Group:0, R32:4, QF:8, SF:16, "3rd":20, RU:24, W:32, OUT:0 };
-const PRIZE_SPLITS = [0.50, 0.25, 0.15];
-const SPECIAL_SPLIT = 0.05;
+const PRIZE_SPLITS = [0.75, 0.15, 0.10];
+const SPECIAL_SPLIT = 0.05; // unused — wooden spoon is flat entry fee back
 const AVATAR_COLORS = [
   ["#e4f2ea","#1a6b47"],["#eaf2f8","#1a5276"],["#f0ecfb","#5b3fa6"],
   ["#fdf6e3","#b8860b"],["#fdf0ef","#c0392b"],["#fef9ec","#976b00"],
@@ -916,6 +992,8 @@ function normaliseTeamName(apiName) {
     "Congo DR": "DR Congo", "Democratic Republic of Congo": "DR Congo",
     "Cape Verde": "Cabo Verde",
     "Curacao": "Curaçao",
+    "Czech Republic": "Czechia",
+    "Côte d'Ivoire": "Ivory Coast", "Cote d'Ivoire": "Ivory Coast",
   };
   return map[apiName] || apiName;
 }
@@ -990,7 +1068,8 @@ function getPot() {
 }
 
 function getPrizeWinners() {
-  const pot = getPot();
+  const fullPot = getPot();
+  const pot = fullPot - (cfg.entryFee || 0); // deduct wooden spoon (entry back)
   const allSorted = (MANUAL_DATA.draws||[])
     .flatMap(d => d.participants||[])
     .sort((a,b) => participantScore(b) - participantScore(a));
@@ -1056,7 +1135,7 @@ function showTab(name) {
 // --- LEADERBOARD ---
 function renderLeaderboard() {
   const draws = getDraws();
-  const pot = getPot();
+  const pot = getPot() - (cfg.entryFee || 0); // deduct wooden spoon (entry back)
   const allParticipants = (MANUAL_DATA.draws||[]).flatMap(d => d.participants||[]);
   const teamsAlive = ALL_TEAMS.filter(t => !["OUT"].includes(teamStatus[t.name])).length;
   const paidCount = allParticipants.filter(p => p.entry==="paid" && !p.cpu).length;
@@ -1113,7 +1192,7 @@ function renderLeaderboard() {
 
     const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
     const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
-    const badgeTxt = p.entry==='paid'?'Paid':p.entry==='bragging'?'Bragging':'Charity';
+    const badgeTxt = p.entry==='paid'?'':p.entry==='bragging'?'Bragging':'Charity';
 
     const teamTags = (p.teams||[]).map(t => {
       const s = teamStatus[t] || 'Group';
@@ -1140,7 +1219,7 @@ function renderLeaderboard() {
         <div class="lb-info">
           <div class="lb-name">
             ${p.name}
-            <span class="badge ${badgeCls}" style="margin-left:6px">${badgeTxt}${p.entry==='charity'&&p.charity?' → '+p.charity:''}</span>
+            ${badgeTxt ? `<span class="badge ${badgeCls}" style="margin-left:6px">${badgeTxt}${p.entry==='charity'&&p.charity?' → '+p.charity:''}</span>` : ''}
           </div>
           <div class="lb-teams">${teamTags}</div>
           <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -1166,56 +1245,192 @@ function setActiveDraw(idx) {
 
 function renderSpecials() {
   const pot = getPot();
-  const bootTeam = MANUAL_DATA.goldenBoot?.team;
-  const gloveTeam = MANUAL_DATA.goldenGlove?.team;
-  const findOwner = team => {
-    if (!team) return null;
-    for (const d of (MANUAL_DATA.draws||[])) {
-      const p = d.participants?.find(p => p.teams?.includes(team));
+  const amt = Math.round(pot * SPECIAL_SPLIT);
+  const cur = cfg.currency || '$';
+
+  // Find worst group-stage-eliminated team: fewest points, then worst goal difference
+  // Once any team is marked OUT, restrict to eliminated teams only (group stage done)
+  const anyOut = Object.values(teamStatus).some(s => s === 'OUT');
+  const teamsWithData = Object.values(standingsTable).filter(t =>
+    t.played > 0 && (!anyOut || teamStatus[t.name] === 'OUT')
+  );
+  const worstTeam = teamsWithData.length
+    ? [...teamsWithData].sort((a, b) => {
+        if (a.points !== b.points) return a.points - b.points;
+        return (a.goalsFor - a.goalsAgainst) - (b.goalsFor - b.goalsAgainst);
+      })[0]
+    : null;
+
+  const spoonOwner = (() => {
+    if (!worstTeam) return null;
+    for (const d of (MANUAL_DATA.draws || [])) {
+      const p = d.participants?.find(p => p.teams?.includes(worstTeam.name));
       if (p) return p;
     }
     return null;
-  };
-  const bootOwner = findOwner(bootTeam);
-  const gloveOwner = findOwner(gloveTeam);
-  const amt = Math.round(pot * SPECIAL_SPLIT);
-  const cur = cfg.currency||'$';
+  })();
+
+  const spoonSub = worstTeam
+    ? `${teamFlag(worstTeam.name)} ${worstTeam.name} · ${worstTeam.points} pts · GD ${worstTeam.goalsFor - worstTeam.goalsAgainst}`
+    : 'Decided after group stage';
 
   document.getElementById('specials-section').innerHTML = `
     <div class="prize-row">
       <div>
-        <div class="prize-label">⚽ Golden boot</div>
-        <div class="prize-sub">${bootTeam ? `${teamFlag(bootTeam)} ${bootTeam}${MANUAL_DATA.goldenBoot?.playerName?' — '+MANUAL_DATA.goldenBoot.playerName:''}` : 'Not yet awarded'}</div>
+        <div class="prize-label">🥄 Wooden spoon</div>
+        <div class="prize-sub">${spoonSub}</div>
       </div>
       <div class="prize-right">
-        <div class="prize-winner">${bootOwner ? bootOwner.name : '—'}</div>
-        ${pot>0?`<div class="prize-amount">${cur}${amt}</div>`:''}
-      </div>
-    </div>
-    <div class="prize-row">
-      <div>
-        <div class="prize-label">🧤 Golden glove</div>
-        <div class="prize-sub">${gloveTeam ? `${teamFlag(gloveTeam)} ${gloveTeam}${MANUAL_DATA.goldenGlove?.playerName?' — '+MANUAL_DATA.goldenGlove.playerName:''}` : 'Not yet awarded'}</div>
-      </div>
-      <div class="prize-right">
-        <div class="prize-winner">${gloveOwner ? gloveOwner.name : '—'}</div>
-        ${pot>0?`<div class="prize-amount">${cur}${amt}</div>`:''}
+        <div class="prize-winner">${spoonOwner ? spoonOwner.name : '—'}</div>
+        ${pot > 0 ? `<div class="prize-amount">${cur}${cfg.entryFee || 0} (entry back)</div>` : ''}
       </div>
     </div>
   `;
 }
 
 // --- DRAW (scratch cards) ---
+// ── Tiered draw ───────────────────────────────────────────────────────────────
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function executeTierDraw(rerun) {
+  const tiers = MANUAL_DATA.teamTiers;
+  if (!tiers || !tiers.tier1 || !tiers.tier2) return;
+  if (!rerun && localStorage.getItem('tierDrawResults')) return;
+
+  const participants = (MANUAL_DATA.draws || [])
+    .flatMap(d => (d.participants || []).filter(p => !p.cpu));
+
+  const t1 = shuffleArray([...tiers.tier1]);
+  const t2 = shuffleArray([...tiers.tier2]);
+
+  const results = participants.map((p, i) => ({
+    id: p.id, name: p.name, entry: p.entry, charity: p.charity || '',
+    teams: [t1[i], t2[i]].filter(Boolean)
+  }));
+
+  localStorage.setItem('tierDrawResults', JSON.stringify(results));
+  renderDraw();
+}
+
+function clearTierDraw() {
+  if (!confirm('Re-run the draw? This will reassign all teams randomly.')) return;
+  localStorage.removeItem('tierDrawResults');
+  executeTierDraw(true);
+}
+
+function copyDrawSnippet() {
+  const el = document.getElementById('draw-snippet-text');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const fb = document.getElementById('copy-feedback');
+    if (fb) { fb.classList.add('show'); setTimeout(() => fb.classList.remove('show'), 2000); }
+  });
+}
+
+function buildDrawSnippet(results) {
+  const lines = results.map(p => {
+    const teams = JSON.stringify(p.teams);
+    const charity = p.entry === 'charity' ? `charity: "${p.charity}", ` : 'charity: "", ';
+    return `  { id: ${p.id}, name: "${p.name}", entry: "${p.entry}", ${charity}teams: ${teams} },`;
+  });
+  return [
+    '// Paste into data_manual.js → draws[0].participants, then set drawDone: true',
+    ...lines,
+  ].join('\n');
+}
+
+function renderPreDraw(container) {
+  const tiers = MANUAL_DATA.teamTiers;
+  const participants = (MANUAL_DATA.draws || [])
+    .flatMap(d => (d.participants || []).filter(p => !p.cpu));
+
+  // Check for existing results in localStorage
+  const stored = localStorage.getItem('tierDrawResults');
+  const results = stored ? JSON.parse(stored) : null;
+
+  if (!tiers || !tiers.tier1 || !tiers.tier2) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">🎴</div>Add teamTiers to data_manual.js, then refresh</div>`;
+    return;
+  }
+
+  if (!participants.length) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">🎴</div>Add participants to data_manual.js, then refresh</div>`;
+    return;
+  }
+
+  if (!results) {
+    // Pre-draw: show generate button
+    const tierList1 = tiers.tier1.map(t => `<span class="tier-badge tier-badge-1">⭐ ${t}</span>`).join('');
+    const tierList2 = tiers.tier2.map(t => `<span class="tier-badge tier-badge-2">${t}</span>`).join('');
+    container.innerHTML = `
+      <div class="tier-draw-panel">
+        <h2>Ready to draw</h2>
+        <p>${participants.length} participants · 1 team from each tier · ${tiers.tier1.length + tiers.tier2.length} teams total</p>
+        <button class="btn btn-primary" onclick="executeTierDraw(false)">🎴 Generate draw</button>
+      </div>
+      <div class="tier-draw-panel">
+        <h2>Tier 1 — favourites</h2>
+        <div class="tier-badges">${tierList1}</div>
+        <h2 style="margin-top:1rem">Tier 2 — underdogs</h2>
+        <div class="tier-badges">${tierList2}</div>
+      </div>`;
+    return;
+  }
+
+  // Results: show assigned cards (revealed) + copy snippet
+  const cards = results.map(p => {
+    const teamContent = p.teams.map(t =>
+      `<div class="scratch-team"><span class="scratch-flag">${teamFlag(t)}</span><span>${t}</span></div>`
+    ).join('');
+    const tier1badge = p.teams[0] ? `<span class="tier-badge tier-badge-1" style="font-size:10px">⭐ Tier 1</span>` : '';
+    const tier2badge = p.teams[1] ? `<span class="tier-badge tier-badge-2" style="font-size:10px">Tier 2</span>` : '';
+    const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
+    const badgeTxt = p.entry==='paid'?'':p.entry==='bragging'?'🏆':'❤️';
+    return `
+      <div class="scratch-card revealed">
+        <div class="scratch-back">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+            <div class="scratch-back-name">${p.name}</div>
+            ${badgeTxt ? `<span class="badge ${badgeCls}">${badgeTxt}</span>` : ''}
+          </div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">${tier1badge}${tier2badge}</div>
+          ${teamContent}
+        </div>
+      </div>`;
+  }).join('');
+
+  const snippet = buildDrawSnippet(results);
+
+  container.innerHTML = `
+    <div class="draw-controls">
+      <div style="font-size:13px;color:var(--c-text-2)">${results.length} participants drawn · 2 teams each</div>
+      <button class="btn btn-sm" onclick="clearTierDraw()">🔁 Re-run draw</button>
+    </div>
+    <div class="draw-grid">${cards}</div>
+    <div class="draw-snippet-wrap">
+      <h3>📋 Copy into data_manual.js</h3>
+      <div class="draw-snippet"><pre id="draw-snippet-text">${snippet}</pre></div>
+      <div class="draw-snippet-actions">
+        <button class="btn btn-sm btn-primary" onclick="copyDrawSnippet()">Copy to clipboard</button>
+        <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
+        <span style="font-size:12px;color:var(--c-text-3)">Then set drawDone: true and push to GitHub</span>
+      </div>
+    </div>`;
+}
+
 function renderDraw() {
   const draws = getDraws();
   const drawDone = cfg.drawDone;
 
   const notice = document.getElementById('draw-notice');
-  const noticeText = document.getElementById('draw-notice-text');
-  if (!drawDone) {
-    notice.style.display = 'flex';
-    noticeText.textContent = "The draw hasn't happened yet! Once it's been run and data_manual.js is updated, scratch cards will appear here.";
-  } else { notice.style.display = 'none'; }
+  notice.style.display = 'none';
 
   const tabSel = document.getElementById('draw-tab-selector');
   if (draws.length > 1) {
@@ -1226,9 +1441,8 @@ function renderDraw() {
   } else { tabSel.style.display = 'none'; }
 
   const draw = draws[activeDrawTab] || draws[0];
-  if (!draw || !drawDone) {
-    document.getElementById('draw-content').innerHTML =
-      '<div class="empty"><div class="empty-icon">🎴</div>Scratch cards appear here after the draw</div>';
+  if (!drawDone) {
+    renderPreDraw(document.getElementById('draw-content'));
     return;
   }
 
@@ -1243,7 +1457,7 @@ function renderDraw() {
     ).join('') || '<div style="font-size:12px;color:var(--c-text-3)">No team assigned</div>';
 
     const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
-    const badgeTxt = p.entry==='paid'?'💰':p.entry==='bragging'?'🏆':'❤️';
+    const badgeTxt = p.entry==='paid'?'':p.entry==='bragging'?'🏆':'❤️';
 
     return `
       <div class="scratch-card ${isCpu?'cpu-card':''}" id="${cardId}"
@@ -1252,7 +1466,7 @@ function renderDraw() {
         <div class="scratch-back">
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div class="scratch-back-name">${p.name}</div>
-            <span class="badge ${badgeCls}">${badgeTxt}</span>
+            ${badgeTxt ? `<span class="badge ${badgeCls}">${badgeTxt}</span>` : ''}
           </div>
           ${teamContent}
         </div>
@@ -1600,9 +1814,9 @@ function renderPrizes() {
   const { first, second, third, pot } = getPrizeWinners();
   const cur = cfg.currency || '$';
   const prizes = [
-    { emoji:'🥇', label:'1st place', sub:'Whose team wins the tournament', winner:first, pct:0.50 },
-    { emoji:'🥈', label:'2nd place', sub:'Whose team is runner-up', winner:second, pct:0.25 },
-    { emoji:'🥉', label:'3rd place', sub:'Whose team finishes third', winner:third, pct:0.15 },
+    { emoji:'🥇', label:'1st place', sub:'Whose team wins the tournament', winner:first, pct:PRIZE_SPLITS[0] },
+    { emoji:'🥈', label:'2nd place', sub:'Whose team is runner-up', winner:second, pct:PRIZE_SPLITS[1] },
+    { emoji:'🥉', label:'3rd place', sub:'Whose team finishes third', winner:third, pct:PRIZE_SPLITS[2] },
   ];
   document.getElementById('prize-list').innerHTML = prizes.map(p => {
     const amt = Math.round(pot * p.pct);

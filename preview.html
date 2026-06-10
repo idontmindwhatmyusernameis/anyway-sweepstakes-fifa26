@@ -3,385 +3,265 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>World Cup Sweepstakes 2026 — Preview</title>
+  <title>Scratch Card Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --c-bg:           #f8f7f4;
-      --c-surface:      #ffffff;
-      --c-border:       #e8e5df;
-      --c-border-mid:   #d4d0c9;
-      --c-text:         #1a1917;
-      --c-text-2:       #6b6760;
-      --c-text-3:       #9e9b96;
-      --c-accent:       #1a6b47;
-      --c-accent-light: #e4f2ea;
-      --c-gold:         #b8860b;
-      --c-gold-light:   #fdf6e3;
-      --c-red:          #c0392b;
-      --c-red-light:    #fdf0ef;
-      --c-blue:         #1a5276;
-      --c-blue-light:   #eaf2f8;
-      --c-amber:        #976b00;
-      --c-amber-light:  #fef9ec;
-      --c-purple:       #5b3fa6;
-      --c-purple-light: #f0ecfb;
-      --font-body:      'DM Sans', sans-serif;
-      --font-mono:      'DM Mono', monospace;
-      --radius:         10px;
-      --radius-lg:      16px;
-      --shadow:         0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+      --c-bg: #f4f4ef; --c-surface: #ffffff; --c-border: #e2e2da;
+      --c-border-mid: #cbcbc2; --c-text: #1a1a17; --c-text-2: #58584e;
+      --c-text-3: #9a9a90; --c-accent: #1a8a50; --c-accent-light: rgba(26,138,80,0.10);
+      --c-gold: #9a6e00; --c-purple: #6a3fa8; --c-purple-light: rgba(106,63,168,0.09);
+      --c-amber: #8a5e00; --c-amber-light: rgba(138,94,0,0.09);
+      --font-body: 'DM Sans', sans-serif; --font-display: 'Bebas Neue', sans-serif;
+      --font-mono: 'DM Mono', monospace; --radius: 10px; --radius-lg: 16px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 2px 8px rgba(0,0,0,0.05);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 15px; }
-    body { font-family: var(--font-body); background: var(--c-bg); color: var(--c-text); line-height: 1.6; min-height: 100vh; }
-    button { font-family: var(--font-body); cursor: pointer; }
-    .app-header { background: var(--c-surface); border-bottom: 1px solid var(--c-border); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
-    .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 1rem; }
-    .header-brand { display: flex; align-items: center; gap: 10px; }
-    .header-logo { font-size: 22px; line-height: 1; }
-    .header-title { font-size: 15px; font-weight: 600; color: var(--c-text); white-space: nowrap; }
-    .header-sub { font-size: 12px; color: var(--c-text-3); }
-    .nav-tabs { display: flex; gap: 2px; }
-    .nav-tab { padding: 6px 14px; font-size: 13px; font-weight: 500; border: none; background: transparent; color: var(--c-text-2); border-radius: var(--radius); transition: all 0.15s; }
-    .nav-tab:hover { background: var(--c-bg); color: var(--c-text); }
-    .nav-tab.active { background: var(--c-accent); color: #fff; }
-    .last-updated { font-size: 11px; color: var(--c-text-3); font-family: var(--font-mono); white-space: nowrap; }
-    .main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-    .section { display: none; }
-    .section.active { display: block; }
-    .card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-    .card-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-text-3); margin-bottom: 1rem; }
-    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
-    .stat-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; box-shadow: var(--shadow); }
-    .stat-label { font-size: 12px; color: var(--c-text-2); margin-bottom: 4px; }
-    .stat-value { font-size: 26px; font-weight: 600; color: var(--c-text); line-height: 1; }
-    .stat-sub { font-size: 11px; color: var(--c-text-3); margin-top: 3px; }
-    .lb-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--c-border); }
-    .lb-row:last-child { border-bottom: none; }
-    .lb-rank { font-size: 13px; font-weight: 600; color: var(--c-text-3); min-width: 26px; text-align: center; font-family: var(--font-mono); }
-    .lb-rank.r1 { color: var(--c-gold); font-size: 16px; }
-    .lb-rank.r2 { color: var(--c-text-2); font-size: 15px; }
-    .lb-rank.r3 { color: var(--c-amber); font-size: 14px; }
-    .avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
-    .lb-info { flex: 1; min-width: 0; }
-    .lb-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .lb-teams { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-    .team-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--c-bg); border: 1px solid var(--c-border); color: var(--c-text-2); }
-    .team-tag.alive { background: var(--c-accent-light); border-color: #a8d5bc; color: var(--c-accent); font-weight: 500; }
-    .team-tag.eliminated { text-decoration: line-through; opacity: 0.5; }
-    .lb-right { text-align: right; flex-shrink: 0; }
-    .lb-points { font-size: 18px; font-weight: 600; color: var(--c-text); line-height: 1; }
-    .lb-pts-label { font-size: 11px; color: var(--c-text-3); }
-    .lb-prize { font-size: 11px; color: var(--c-accent); font-weight: 500; margin-top: 2px; }
-    .lb-cascade { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
-    .progress-bar { height: 3px; background: var(--c-border); border-radius: 2px; margin-top: 5px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--c-accent); border-radius: 2px; }
-    .badge { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .badge-paid { background: var(--c-accent-light); color: var(--c-accent); }
-    .badge-bragging { background: var(--c-purple-light); color: var(--c-purple); }
-    .badge-charity { background: var(--c-amber-light); color: var(--c-amber); }
-    .draw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 1rem; }
-    .scratch-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; min-height: 110px; position: relative; }
-    .scratch-card:hover:not(.revealed) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .scratch-front { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, var(--c-accent) 0%, #0f4a31 100%); transition: opacity 0.4s, transform 0.4s; border-radius: var(--radius-lg); }
-    .scratch-front-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); text-align: center; padding: 0 12px; }
-    .scratch-front-hint { font-size: 11px; color: rgba(255,255,255,0.5); }
-    .scratch-back { padding: 14px; display: flex; flex-direction: column; gap: 6px; opacity: 0; transition: opacity 0.4s 0.2s; }
-    .scratch-card.revealed .scratch-front { opacity: 0; transform: scale(0.9); }
-    .scratch-card.revealed .scratch-back { opacity: 1; }
+    body { font-family: var(--font-body); background: var(--c-bg); color: var(--c-text); min-height: 100vh; padding: 2rem; }
+    h1 { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: .08em; margin-bottom: .25rem; }
+    .sub { font-size: 13px; color: var(--c-text-3); margin-bottom: 1.5rem; }
+
+    .draw-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 1rem;
+    }
+    .scratch-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s;
+      min-height: 110px;
+      position: relative;
+      user-select: none;
+    }
+    .scratch-card:not(.revealed):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .scratch-canvas {
+      position: absolute; inset: 0;
+      border-radius: var(--radius-lg);
+      display: block;
+      cursor: url('./cursor.png') 16 32, crosshair;
+      touch-action: none;
+      z-index: 2;
+    }
+    .scratch-canvas.hidden { display: none; }
+    .scratch-back { padding: 14px; display: flex; flex-direction: column; gap: 6px; }
     .scratch-back-name { font-size: 12px; font-weight: 600; color: var(--c-text-2); }
     .scratch-team { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; }
     .scratch-flag { font-size: 18px; }
-    .draw-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
-    .reveal-all-btn { font-size: 11px; color: var(--c-text-3); background: none; border: none; text-decoration: underline; cursor: pointer; }
-    .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
-    .group-card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; }
-    .group-header { background: var(--c-text); color: #fff; padding: 8px 14px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; justify-content: space-between; }
-    .group-table { width: 100%; border-collapse: collapse; }
-    .group-table th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-text-3); padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--c-border); }
-    .group-table th:first-child { text-align: left; }
-    .group-table td { padding: 8px 8px; font-size: 13px; text-align: right; border-bottom: 1px solid var(--c-border); }
-    .group-table td:first-child { text-align: left; }
-    .group-table tr:last-child td { border-bottom: none; }
-    .group-table tr.qualified td { background: var(--c-accent-light); }
-    .group-table tr.maybe-qualified td { background: var(--c-amber-light); }
-    .team-cell { display: flex; align-items: center; gap: 7px; }
-    .team-name-cell { font-weight: 500; }
-    .pts-cell { font-weight: 600; color: var(--c-accent); }
-    .gd-cell { font-family: var(--font-mono); font-size: 12px; }
-    .prize-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--c-border); gap: 12px; }
-    .prize-row:last-child { border-bottom: none; }
-    .prize-label { font-size: 14px; color: var(--c-text); }
-    .prize-sub { font-size: 12px; color: var(--c-text-3); margin-top: 2px; }
-    .prize-right { text-align: right; flex-shrink: 0; }
-    .prize-winner { font-size: 14px; font-weight: 600; }
-    .prize-amount { font-size: 13px; color: var(--c-text-2); }
-    .preview-banner { background: var(--c-amber-light); border: 1px solid #e8c97a; border-radius: var(--radius-lg); padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; font-size: 13px; color: var(--c-amber); }
-    @media (max-width: 640px) { .main { padding: 1rem; } .app-header { padding: 0 1rem; } .nav-tab span { display: none; } .groups-grid { grid-template-columns: 1fr; } }
+    .badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 10px; font-weight: 600; padding: 2px 7px;
+      border-radius: 20px; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .badge-paid    { background: var(--c-accent-light); color: var(--c-accent); }
+    .badge-bragging{ background: var(--c-purple-light); color: var(--c-purple); }
+    .badge-charity { background: var(--c-amber-light);  color: var(--c-amber); }
+
+    .controls {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 1rem;
+    }
+    .reveal-all-btn {
+      font-size: 11px; color: var(--c-text-3); background: none;
+      border: none; text-decoration: underline; cursor: pointer; font-family: var(--font-body);
+    }
+    .notice {
+      font-size: 12px; color: var(--c-text-3); background: var(--c-surface);
+      border: 1px solid var(--c-border); border-radius: var(--radius);
+      padding: 8px 14px; margin-bottom: 1.5rem; display: inline-block;
+    }
   </style>
 </head>
 <body>
 
-<header class="app-header">
-  <div class="header-inner">
-    <div class="header-brand">
-      <div class="header-logo">⚽</div>
-      <div>
-        <div class="header-title">Anyway World Cup 2026 Sweepstakes</div>
-        <div class="header-sub">12 participants · 2 teams each</div>
-      </div>
-    </div>
-    <nav class="nav-tabs">
-      <button class="nav-tab active" onclick="showTab('leaderboard')">🏆 <span>Leaderboard</span></button>
-      <button class="nav-tab" onclick="showTab('draw')">🎴 <span>Draw</span></button>
-      <button class="nav-tab" onclick="showTab('groups')">📊 <span>Groups</span></button>
-      <button class="nav-tab" onclick="showTab('prizes')">💰 <span>Prizes</span></button>
-    </nav>
-    <div class="last-updated">Updated 4 Jun, 9:00 pm AEST</div>
-  </div>
-</header>
+<h1>Scratch Card Preview</h1>
+<p class="sub">Sample draw with dummy participants — showing how cards will look on draw day.</p>
+<span class="notice">⚠️ Preview data only. Real participants go in data_manual.js.</span>
 
-<main class="main">
+<div class="controls">
+  <span style="font-size:13px;color:var(--c-text-2)">12 participants · 2 teams each</span>
+  <button class="reveal-all-btn" onclick="revealAll()">reveal all</button>
+</div>
 
-  <!-- LEADERBOARD -->
-  <section id="tab-leaderboard" class="section active">
-    <div class="preview-banner">👀 Preview mode — placeholder data to show how it'll look mid-tournament</div>
-    <div class="stats-row">
-      <div class="stat-card"><div class="stat-label">Participants</div><div class="stat-value">12</div><div class="stat-sub">10 paid entries</div></div>
-      <div class="stat-card"><div class="stat-label">Prize pot</div><div class="stat-value">$200</div><div class="stat-sub">$20 per entry</div></div>
-      <div class="stat-card"><div class="stat-label">Teams alive</div><div class="stat-value">32</div><div class="stat-sub">of 48 teams</div></div>
-      <div class="stat-card"><div class="stat-label">Last updated</div><div class="stat-value" style="font-size:14px;margin-top:4px">4 Jun, 9:00 pm</div><div class="stat-sub">via football-data.org</div></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Standings</div>
-      <div id="leaderboard-list"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Special awards</div>
-      <div class="prize-row">
-        <div><div class="prize-label">⚽ Golden boot</div><div class="prize-sub">🇦🇷 Argentina — Lionel Messi</div></div>
-        <div class="prize-right"><div class="prize-winner">James Law</div><div class="prize-amount">$10</div></div>
-      </div>
-      <div class="prize-row">
-        <div><div class="prize-label">🧤 Golden glove</div><div class="prize-sub">Not yet awarded</div></div>
-        <div class="prize-right"><div class="prize-winner">—</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DRAW -->
-  <section id="tab-draw" class="section">
-    <div class="preview-banner">👀 Preview mode — placeholder data</div>
-    <div class="draw-controls">
-      <div style="font-size:13px;color:var(--c-text-2)">12 participants · 2 teams each</div>
-      <button class="reveal-all-btn" onclick="revealAll()">reveal all</button>
-    </div>
-    <div class="draw-grid" id="draw-grid"></div>
-  </section>
-
-  <!-- GROUPS -->
-  <section id="tab-groups" class="section">
-    <div class="preview-banner" style="margin-bottom:1rem">👀 Preview mode — placeholder standings after matchday 1</div>
-    <div class="groups-grid" id="groups-grid"></div>
-  </section>
-
-  <!-- PRIZES -->
-  <section id="tab-prizes" class="section">
-    <div class="preview-banner">👀 Preview mode — placeholder data</div>
-    <div class="card">
-      <div class="card-title">Prize breakdown</div>
-      <div class="prize-row">
-        <div><div class="prize-label">🥇 1st place</div><div class="prize-sub">Whose team wins the tournament</div></div>
-        <div class="prize-right"><div class="prize-winner">James Law</div><div class="prize-amount">$100</div></div>
-      </div>
-      <div class="prize-row">
-        <div><div class="prize-label">🥈 2nd place</div><div class="prize-sub">Whose team is runner-up</div></div>
-        <div class="prize-right"><div class="prize-winner">Priya Sharma</div><div class="prize-amount">$50</div></div>
-      </div>
-      <div class="prize-row">
-        <div><div class="prize-label">🥉 3rd place</div><div class="prize-sub">Whose team finishes third</div></div>
-        <div class="prize-right"><div class="prize-winner">Tom Richards</div><div class="prize-amount">$30</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Cascade rule</div>
-      <p style="font-size:13px;color:var(--c-text-2);line-height:1.7">
-        If a bragging rights or charity entrant finishes in a prize position, that prize cascades to the next highest-placed <strong>paid</strong> entrant. For charity entries, winnings go directly to their nominated cause. CPU placeholder slots never win prizes.
-      </p>
-    </div>
-  </section>
-
-</main>
+<div class="draw-grid" id="draw-grid"></div>
 
 <script>
-// ---- Placeholder data ----
-const AVATAR_COLORS = [
-  ["#e4f2ea","#1a6b47"],["#eaf2f8","#1a5276"],["#f0ecfb","#5b3fa6"],
-  ["#fdf6e3","#b8860b"],["#fdf0ef","#c0392b"],["#fef9ec","#976b00"],
+const SAMPLE = [
+  { name:"Sarah Chen",     entry:"paid",     teams:["England","Brazil"] },
+  { name:"Tom Richards",   entry:"bragging", teams:["France","Germany"] },
+  { name:"Priya Sharma",   entry:"charity",  teams:["Argentina","Spain"] },
+  { name:"James O'Brien",  entry:"paid",     teams:["Portugal","Japan"] },
+  { name:"Lena Fischer",   entry:"paid",     teams:["Netherlands","Morocco"] },
+  { name:"Chris Lam",      entry:"paid",     teams:["United States","Australia"] },
+  { name:"Amara Diallo",   entry:"paid",     teams:["Senegal","Uruguay"] },
+  { name:"Ben Walsh",      entry:"bragging", teams:["Belgium","Chile"] },
+  { name:"Yuki Tanaka",    entry:"paid",     teams:["Korea Republic","Mexico"] },
+  { name:"Nina Popov",     entry:"paid",     teams:["Serbia","Colombia"] },
+  { name:"Oscar Ruiz",     entry:"paid",     teams:["Ecuador","Canada"] },
+  { name:"Mia Thompson",   entry:"charity",  teams:["Denmark","Switzerland"] },
 ];
 
-const participants = [
-  { name:"James Law",      entry:"paid",     teams:["Argentina","France"],       teamStatus:["SF","QF"] },
-  { name:"Priya Sharma",   entry:"paid",     teams:["Brazil","Germany"],         teamStatus:["QF","R32"] },
-  { name:"Tom Richards",   entry:"bragging", teams:["England","Spain"],          teamStatus:["R32","SF"] },
-  { name:"Sarah Chen",     entry:"paid",     teams:["Portugal","Netherlands"],   teamStatus:["QF","R32"] },
-  { name:"Marcus Webb",    entry:"paid",     teams:["Uruguay","Belgium"],        teamStatus:["Group","Group"] },
-  { name:"Aisha Okonkwo",  entry:"charity",  teams:["Morocco","Senegal"],        teamStatus:["Group","Group"], charity:"Red Cross" },
-  { name:"Liam Nguyen",    entry:"paid",     teams:["Japan","Korea Republic"],   teamStatus:["R32","Group"] },
-  { name:"Emma Fitzgerald",entry:"paid",     teams:["Colombia","Chile"],         teamStatus:["Group","Group"] },
-  { name:"Dev Patel",      entry:"paid",     teams:["Mexico","Australia"],       teamStatus:["Group","Group"] },
-  { name:"Chloe Martin",   entry:"paid",     teams:["United States","Canada"],   teamStatus:["Group","Group"] },
-  { name:"Rafi Torres",    entry:"bragging", teams:["Croatia","Denmark"],        teamStatus:["Group","Group"] },
-  { name:"Yuki Tanaka",    entry:"paid",     teams:["Switzerland","Türkiye"],    teamStatus:["Group","Group"] },
-];
-
-const ROUND_POINTS = { Group:0, R32:4, QF:8, SF:16, "3rd":20, RU:24, W:32, OUT:0 };
-const PRIZE_SPLITS = [0.50, 0.25, 0.15];
-
-function score(p) {
-  return Math.max(...p.teamStatus.map(s => ROUND_POINTS[s] || 0));
-}
-
-function avatar(name, idx) {
-  const [bg, fg] = AVATAR_COLORS[idx % AVATAR_COLORS.length];
-  const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  return `<div class="avatar" style="background:${bg};color:${fg}">${initials}</div>`;
-}
-
-function showTab(name) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-  document.getElementById(`tab-${name}`).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(b => {
-    if (b.getAttribute('onclick').includes(name)) b.classList.add('active');
-  });
-}
-
-// Leaderboard
-const sorted = [...participants].sort((a,b) => score(b) - score(a));
-const pot = 200;
-let paidPrizeIdx = 0;
-
-document.getElementById('leaderboard-list').innerHTML = sorted.map((p, i) => {
-  const s = score(p);
-  const pct = Math.round((s / 32) * 100);
-  const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
-  const badgeTxt = p.entry==='paid'?'Paid':p.entry==='bragging'?'Bragging':'Charity';
-  const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
-
-  const tags = p.teams.map((t, ti) => {
-    const st = p.teamStatus[ti];
-    const cls = st==='OUT'?'eliminated':'alive';
-    return `<span class="team-tag ${cls}">${t}</span>`;
-  }).join('');
-
-  let prizeHtml = '';
-  if (p.entry==='paid' && paidPrizeIdx < 3) {
-    const amt = Math.round(pot * PRIZE_SPLITS[paidPrizeIdx]);
-    prizeHtml = `<div class="lb-prize">$${amt} prize</div>`;
-    paidPrizeIdx++;
-  } else if ((p.entry==='bragging'||p.entry==='charity') && i<3) {
-    prizeHtml = `<div class="lb-cascade">Prize cascades ↓</div>`;
-  }
-
-  const origIdx = participants.indexOf(p);
-  return `<div class="lb-row">
-    <div class="lb-rank ${rankCls}">${i+1}</div>
-    ${avatar(p.name, origIdx)}
-    <div class="lb-info">
-      <div class="lb-name">${p.name} <span class="badge ${badgeCls}" style="margin-left:6px">${badgeTxt}${p.entry==='charity'&&p.charity?' → '+p.charity:''}</span></div>
-      <div class="lb-teams">${tags}</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-    </div>
-    <div class="lb-right">
-      <div class="lb-points">${s}</div>
-      <div class="lb-pts-label">pts</div>
-      ${prizeHtml}
-    </div>
-  </div>`;
-}).join('');
-
-// Draw / scratch cards
-const drawGrid = document.getElementById('draw-grid');
-drawGrid.innerHTML = participants.map((p, i) => {
-  const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
-  const badgeTxt = p.entry==='paid'?'💰':p.entry==='bragging'?'🏆':'❤️';
-  const teamContent = p.teams.map(t => `<div class="scratch-team"><span class="scratch-flag">⚽</span><span>${t}</span></div>`).join('');
-  return `<div class="scratch-card" id="card-${i}" onclick="revealCard('card-${i}')">
-    <div class="scratch-front">
-      <div class="scratch-front-name">${p.name}</div>
-      <div class="scratch-front-hint">tap to reveal</div>
-    </div>
-    <div class="scratch-back">
-      <div style="display:flex;align-items:center;justify-content:space-between">
-        <div class="scratch-back-name">${p.name}</div>
-        <span class="badge ${badgeCls}">${badgeTxt}</span>
-      </div>
-      ${teamContent}
-    </div>
-  </div>`;
-}).join('');
-
-function revealCard(id) { document.getElementById(id)?.classList.add('revealed'); }
-function revealAll() { document.querySelectorAll('.scratch-card').forEach(c => c.classList.add('revealed')); }
-
-// Groups — sample data for groups A–D
-const groupData = {
-  A: [
-    { flag:"🇲🇽", name:"Mexico",       p:2, w:1, d:1, l:0, gf:3, ga:1 },
-    { flag:"🇰🇷", name:"Korea Republic",p:2, w:1, d:0, l:1, gf:2, ga:2 },
-    { flag:"🇿🇦", name:"South Africa", p:2, w:0, d:2, l:0, gf:1, ga:1 },
-    { flag:"🇨🇿", name:"Czechia",      p:2, w:0, d:1, l:1, gf:1, ga:3 },
-  ],
-  B: [
-    { flag:"🇨🇭", name:"Switzerland",  p:2, w:2, d:0, l:0, gf:4, ga:0 },
-    { flag:"🇨🇦", name:"Canada",       p:2, w:1, d:0, l:1, gf:2, ga:2 },
-    { flag:"🇧🇦", name:"Bosnia-Herzegovina", p:2, w:0, d:1, l:1, gf:1, ga:2 },
-    { flag:"🇶🇦", name:"Qatar",        p:2, w:0, d:1, l:1, gf:0, ga:3 },
-  ],
-  C: [
-    { flag:"🇧🇷", name:"Brazil",       p:2, w:2, d:0, l:0, gf:5, ga:1 },
-    { flag:"🇲🇦", name:"Morocco",      p:2, w:1, d:0, l:1, gf:2, ga:3 },
-    { flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", name:"Scotland",     p:2, w:0, d:1, l:1, gf:1, ga:2 },
-    { flag:"🇭🇹", name:"Haiti",        p:2, w:0, d:1, l:1, gf:1, ga:3 },
-  ],
-  D: [
-    { flag:"🇺🇸", name:"United States",p:2, w:1, d:1, l:0, gf:3, ga:2 },
-    { flag:"🇹🇷", name:"Türkiye",      p:2, w:1, d:0, l:1, gf:2, ga:2 },
-    { flag:"🇦🇺", name:"Australia",    p:2, w:0, d:2, l:0, gf:2, ga:2 },
-    { flag:"🇵🇾", name:"Paraguay",     p:2, w:0, d:1, l:1, gf:1, ga:2 },
-  ],
+const FLAGS = {
+  "England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Brazil":"🇧🇷","France":"🇫🇷","Germany":"🇩🇪",
+  "Argentina":"🇦🇷","Spain":"🇪🇸","Portugal":"🇵🇹","Japan":"🇯🇵",
+  "Netherlands":"🇳🇱","Morocco":"🇲🇦","United States":"🇺🇸","Australia":"🇦🇺",
+  "Senegal":"🇸🇳","Uruguay":"🇺🇾","Belgium":"🇧🇪","Chile":"🇨🇱",
+  "Korea Republic":"🇰🇷","Mexico":"🇲🇽","Serbia":"🇷🇸","Colombia":"🇨🇴",
+  "Ecuador":"🇪🇨","Canada":"🇨🇦","Denmark":"🇩🇰","Switzerland":"🇨🇭",
 };
 
-const groupsGrid = document.getElementById('groups-grid');
-groupsGrid.innerHTML = Object.entries(groupData).map(([letter, teams]) => {
-  const sorted = [...teams].sort((a,b) => {
-    const ap = a.w*3+a.d, bp = b.w*3+b.d;
-    return bp - ap || (b.gf-b.ga) - (a.gf-a.ga);
+const GREEN_PARTICLES = ['#C3FF56','#a8e040','#d4ff8a','#8bc320','#eaffb3','#ffffff'];
+
+function buildGrid() {
+  const grid = document.getElementById('draw-grid');
+  grid.innerHTML = '';
+  SAMPLE.forEach(p => {
+    const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
+    const badgeTxt = p.entry==='paid'?'💰':p.entry==='bragging'?'🏆':'❤️';
+    const teamContent = p.teams.map(t =>
+      `<div class="scratch-team"><span class="scratch-flag">${FLAGS[t]||'🏳️'}</span><span>${t}</span></div>`
+    ).join('');
+
+    const card = document.createElement('div');
+    card.className = 'scratch-card';
+    card.dataset.name = p.name;
+    card.innerHTML = `
+      <div class="scratch-back">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="scratch-back-name">${p.name}</div>
+          <span class="badge ${badgeCls}">${badgeTxt}</span>
+        </div>
+        ${teamContent}
+      </div>
+      <canvas class="scratch-canvas"></canvas>
+    `;
+    grid.appendChild(card);
   });
-  const rows = sorted.map((t, i) => {
-    const gd = t.gf - t.ga;
-    const pts = t.w*3 + t.d;
-    const rowCls = i < 2 ? 'qualified' : '';
-    return `<tr class="${rowCls}">
-      <td><div class="team-cell"><span>${t.flag}</span><span class="team-name-cell">${t.name}</span></div></td>
-      <td>${t.p}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
-      <td class="gd-cell">${gd>=0?'+':''}${gd}</td>
-      <td class="pts-cell">${pts}</td>
-    </tr>`;
-  }).join('');
-  return `<div class="group-card">
-    <div class="group-header"><span>Group ${letter}</span><span style="font-weight:400;opacity:0.6;font-size:10px">P W D L GD Pts</span></div>
-    <table class="group-table">
-      <thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  </div>`;
-}).join('');
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.scratch-card').forEach(initScratchCanvas);
+  });
+}
+
+function initScratchCanvas(card) {
+  if (card.dataset.scratchInit) return;
+  card.dataset.scratchInit = '1';
+
+  const sc = card.querySelector('.scratch-canvas');
+  if (!sc) return;
+
+  const W = sc.width  = card.offsetWidth  || 180;
+  const H = sc.height = card.offsetHeight || 110;
+  const ctx = sc.getContext('2d');
+
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, '#C3FF56');
+  grad.addColorStop(1, '#a8e040');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = 'rgba(0,0,0,0.85)';
+  ctx.font = '600 14px "DM Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(card.dataset.name, W / 2, H / 2 - 10, W - 24);
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.font = '11px "DM Sans", sans-serif';
+  ctx.fillText('scratch to reveal', W / 2, H / 2 + 10);
+
+  const pc = document.createElement('canvas');
+  pc.width = W; pc.height = H;
+  pc.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:3;';
+  card.appendChild(pc);
+  const pctx = pc.getContext('2d');
+
+  const particles = [];
+  let animId = null;
+
+  function spawnParticles(x, y) {
+    for (let i = 0; i < 6; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 1 + Math.random() * 2.5;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.2,
+        alpha: 0.85 + Math.random() * 0.15,
+        size: 1.5 + Math.random() * 2.5,
+        color: GREEN_PARTICLES[Math.floor(Math.random() * GREEN_PARTICLES.length)]
+      });
+    }
+    if (!animId) tick();
+  }
+
+  function tick() {
+    pctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.alpha -= 0.03;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      pctx.globalAlpha = p.alpha;
+      pctx.fillStyle = p.color;
+      pctx.beginPath();
+      pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      pctx.fill();
+    }
+    pctx.globalAlpha = 1;
+    animId = particles.length > 0 ? requestAnimationFrame(tick) : null;
+  }
+
+  let isDown = false;
+
+  function getXY(e) {
+    const r = sc.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return [src.clientX - r.left, src.clientY - r.top];
+  }
+
+  function scratchAt(x, y) {
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    spawnParticles(x, y);
+    const data = ctx.getImageData(0, 0, W, H).data;
+    let cleared = 0;
+    for (let i = 3; i < data.length; i += 4) { if (data[i] < 128) cleared++; }
+    if (cleared / (W * H) > 0.75) {
+      card.classList.add('revealed');
+      sc.classList.add('hidden');
+      pc.style.display = 'none';
+    }
+  }
+
+  sc.addEventListener('mousedown',  e => { isDown = true;  scratchAt(...getXY(e)); });
+  sc.addEventListener('mousemove',  e => { if (isDown) scratchAt(...getXY(e)); });
+  sc.addEventListener('mouseup',    () => isDown = false);
+  sc.addEventListener('mouseleave', () => isDown = false);
+  sc.addEventListener('touchstart', e => { e.preventDefault(); isDown = true;  scratchAt(...getXY(e)); }, {passive:false});
+  sc.addEventListener('touchmove',  e => { e.preventDefault(); if (isDown) scratchAt(...getXY(e)); }, {passive:false});
+  sc.addEventListener('touchend',   () => isDown = false);
+}
+
+function revealAll() {
+  document.querySelectorAll('.scratch-card:not(.revealed)').forEach(card => {
+    card.classList.add('revealed');
+    const sc = card.querySelector('.scratch-canvas');
+    const pc = card.querySelector('canvas:not(.scratch-canvas)');
+    if (sc) sc.classList.add('hidden');
+    if (pc) pc.style.display = 'none';
+  });
+}
+
+buildGrid();
 </script>
 </body>
 </html>
