@@ -1205,7 +1205,8 @@ function renderLeaderboard() {
     // Prize annotation
     let prizeHtml = '';
     if (p.entry==='paid' && pot>0 && paidPrizeIdx<3) {
-      const amt = Math.round(pot * PRIZE_SPLITS[paidPrizeIdx]);
+      const fixedPrizes = cfg.prizes || PRIZE_SPLITS.map(s => Math.round(pot * s));
+      const amt = fixedPrizes[paidPrizeIdx];
       prizeHtml = `<div class="lb-prize">${cfg.currency||'$'}${amt} prize</div>`;
       paidPrizeIdx++;
     } else if ((p.entry==='bragging'||p.entry==='charity') && i<3) {
@@ -1813,13 +1814,14 @@ function renderBracket() {
 function renderPrizes() {
   const { first, second, third, pot } = getPrizeWinners();
   const cur = cfg.currency || '$';
+  const fixedPrizes = cfg.prizes || PRIZE_SPLITS.map(s => Math.round(pot * s));
   const prizes = [
-    { emoji:'🥇', label:'1st place', sub:'Whose team wins the tournament', winner:first, pct:PRIZE_SPLITS[0] },
-    { emoji:'🥈', label:'2nd place', sub:'Whose team is runner-up', winner:second, pct:PRIZE_SPLITS[1] },
-    { emoji:'🥉', label:'3rd place', sub:'Whose team finishes third', winner:third, pct:PRIZE_SPLITS[2] },
+    { emoji:'🥇', label:'1st place', sub:'Whose team wins the tournament', winner:first, amt:fixedPrizes[0] },
+    { emoji:'🥈', label:'2nd place', sub:'Whose team is runner-up', winner:second, amt:fixedPrizes[1] },
+    { emoji:'🥉', label:'3rd place', sub:'Whose team finishes third', winner:third, amt:fixedPrizes[2] },
   ];
   document.getElementById('prize-list').innerHTML = prizes.map(p => {
-    const amt = Math.round(pot * p.pct);
+    const amt = p.amt;
     const isCascade = p.winner && (p.winner.entry==='bragging'||p.winner.entry==='charity');
     return `<div class="prize-row">
       <div>

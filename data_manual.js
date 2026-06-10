@@ -14,6 +14,7 @@ const MANUAL_DATA = {
   config: {
     sweepstakesName: "World Cup 2026 Sweepstakes",
     entryFee: 10,              // in dollars — change to your currency/amount
+    prizes: [150, 50, 30],     // fixed prize amounts for 1st, 2nd, 3rd
     teamsPerPerson: 2,         // 1, 2, or 3 — decide based on sign-up numbers
     currency: "$",
     timezone: "Australia/Sydney",  // for displaying match times
@@ -29,39 +30,36 @@ const MANUAL_DATA = {
   // cpu: true means this is a placeholder slot (never wins prizes)
   // ---------------------------------------------------------------------------
   draws: [
-    // Paste into data_manual.js → draws[0].participants, then set drawDone: true
-  { id: 1, name: "Lochie", entry: "paid", charity: "", teams: ["Croatia","Qatar"] },
-  { id: 2, name: "Kaye", entry: "paid", charity: "", teams: ["Switzerland","Algeria"] },
-  { id: 3, name: "James", entry: "paid", charity: "", teams: ["Japan","Czechia"] },
-  { id: 4, name: "Ham", entry: "paid", charity: "", teams: ["Senegal","New Zealand"] },
-  { id: 5, name: "Tash", entry: "paid", charity: "", teams: ["France","Egypt"] },
-  { id: 6, name: "Ari", entry: "paid", charity: "", teams: ["Brazil","Haiti"] },
-  { id: 7, name: "Laura", entry: "paid", charity: "", teams: ["Netherlands","Curaçao"] },
-  { id: 8, name: "Han C", entry: "paid", charity: "", teams: ["Mexico","Panama"] },
-  { id: 9, name: "Joseph", entry: "paid", charity: "", teams: ["Germany","Ghana"] },
-  { id: 10, name: "Brae", entry: "paid", charity: "", teams: ["Türkiye","Cabo Verde"] },
-  { id: 11, name: "Mik", entry: "paid", charity: "", teams: ["Norway","Australia"] },
-  { id: 12, name: "Emma C", entry: "paid", charity: "", teams: ["Uruguay","Iraq"] },
-  { id: 13, name: "John", entry: "paid", charity: "", teams: ["United States","Paraguay"] },
-  { id: 14, name: "Chai", entry: "paid", charity: "", teams: ["Ecuador","Jordan"] },
-  { id: 15, name: "Mandy", entry: "paid", charity: "", teams: ["Austria","Scotland"] },
-  { id: 16, name: "Nick C", entry: "paid", charity: "", teams: ["Sweden","Iran"] },
-  { id: 17, name: "Sirish", entry: "paid", charity: "", teams: ["Portugal","Tunisia"] },
-  { id: 18, name: "Kevin Mario", entry: "paid", charity: "", teams: ["Canada","Saudi Arabia"] },
-  { id: 19, name: "Allana", entry: "paid", charity: "", teams: ["Morocco","Korea Republic"] },
-  { id: 20, name: "Jordana", entry: "paid", charity: "", teams: ["Argentina","Ivory Coast"] },
-  { id: 21, name: "Clauds", entry: "paid", charity: "", teams: ["Belgium","Uzbekistan"] },
-  { id: 22, name: "Pirow", entry: "paid", charity: "", teams: ["England","Bosnia-Herzegovina"] },
-  { id: 23, name: "Phoebe", entry: "paid", charity: "", teams: ["Spain","DR Congo"] },
-  { id: 24, name: "Praz", entry: "paid", charity: "", teams: ["Colombia","South Africa"] },
-    // If you get more than 48 paid entries, uncomment and fill Draw 2:
-    // {
-    //   id: 2,
-    //   name: "Draw 2",
-    //   participants: [
-    //     // Real participants go first, CPU slots fill the gaps automatically
-    //   ]
-    // },
+    {
+      id: 1,
+      name: "Draw 1",
+      participants: [
+        { id: 1,  name: "Lochie",      entry: "paid", charity: "", teams: ["Croatia","Qatar"] },
+        { id: 2,  name: "Kaye",        entry: "paid", charity: "", teams: ["Switzerland","Algeria"] },
+        { id: 3,  name: "James",       entry: "paid", charity: "", teams: ["Japan","Czechia"] },
+        { id: 4,  name: "Ham",         entry: "paid", charity: "", teams: ["Senegal","New Zealand"] },
+        { id: 5,  name: "Tash",        entry: "paid", charity: "", teams: ["France","Egypt"] },
+        { id: 6,  name: "Ari",         entry: "paid", charity: "", teams: ["Brazil","Haiti"] },
+        { id: 7,  name: "Laura",       entry: "paid", charity: "", teams: ["Netherlands","Curaçao"] },
+        { id: 8,  name: "Han C",       entry: "paid", charity: "", teams: ["Mexico","Panama"] },
+        { id: 9,  name: "Joseph",      entry: "paid", charity: "", teams: ["Germany","Ghana"] },
+        { id: 10, name: "Brae",        entry: "paid", charity: "", teams: ["Türkiye","Cabo Verde"] },
+        { id: 11, name: "Mik",         entry: "paid", charity: "", teams: ["Norway","Australia"] },
+        { id: 12, name: "Emma C",      entry: "paid", charity: "", teams: ["Uruguay","Iraq"] },
+        { id: 13, name: "John",        entry: "paid", charity: "", teams: ["United States","Paraguay"] },
+        { id: 14, name: "Chai",        entry: "paid", charity: "", teams: ["Ecuador","Jordan"] },
+        { id: 15, name: "Mandy",       entry: "paid", charity: "", teams: ["Austria","Scotland"] },
+        { id: 16, name: "Nick C",      entry: "paid", charity: "", teams: ["Sweden","Iran"] },
+        { id: 17, name: "Sirish",      entry: "paid", charity: "", teams: ["Portugal","Tunisia"] },
+        { id: 18, name: "Kevin Mario", entry: "paid", charity: "", teams: ["Canada","Saudi Arabia"] },
+        { id: 19, name: "Allana",      entry: "paid", charity: "", teams: ["Morocco","Korea Republic"] },
+        { id: 20, name: "Jordana",     entry: "paid", charity: "", teams: ["Argentina","Ivory Coast"] },
+        { id: 21, name: "Clauds",      entry: "paid", charity: "", teams: ["Belgium","Uzbekistan"] },
+        { id: 22, name: "Pirow",       entry: "paid", charity: "", teams: ["England","Bosnia-Herzegovina"] },
+        { id: 23, name: "Phoebe",      entry: "paid", charity: "", teams: ["Spain","DR Congo"] },
+        { id: 24, name: "Praz",        entry: "paid", charity: "", teams: ["Colombia","South Africa"] },
+      ]
+    },
   ],
 
   // ---------------------------------------------------------------------------
