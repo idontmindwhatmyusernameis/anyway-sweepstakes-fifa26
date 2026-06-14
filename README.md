@@ -130,23 +130,22 @@ The live site updates within about 30 seconds.
 
 ---
 
-## Recording golden boot / golden glove
+## Entering the knockout stage
 
-Open `data_manual.js` and find the `goldenBoot` and `goldenGlove` sections:
+Once the group stage ends and knockout matches begin, the app handles the transition automatically — no config changes needed.
 
-```js
-goldenBoot: {
-  team: "Brazil",          // whose squad's player is top scorer
-  playerName: "Vinícius Jr.",  // displayed for info — doesn't affect prizes
-},
-goldenGlove: {
-  team: "France",
-  playerName: "Mike Maignan",
-},
-```
+**What changes on the site:**
+- The header pill switches from **Group stage** to **Knockouts**
+- The leaderboard switches from group points to knockout scoring (4 / 8 / 16 / 32 pts per round reached)
+- Prize projections on the leaderboard only appear once knockouts start
+- The Bracket tab fills in from API data as results come in
 
-Use the exact team name as it appears in the standings (e.g. `"Korea Republic"` not `"South Korea"`).
-Save, commit, push.
+**What you need to do:**
+1. Keep running `python update.py` after each round of matches (same as during the group stage)
+2. Preview locally if you want: `python -m http.server 8000`
+3. Push to GitHub: `git add data.js && git commit -m "update results" && git push`
+
+The live site updates within about 30 seconds. Share `#bracket` links (e.g. `yoursite.com/#bracket`) so people can jump straight to the knockout view.
 
 ---
 

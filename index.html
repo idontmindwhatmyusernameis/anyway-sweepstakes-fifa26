@@ -175,26 +175,60 @@
     /* =========================================================
        LEADERBOARD
        ========================================================= */
-    .lb-row {
+    .lb-toolbar {
       display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
       align-items: center;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--c-border);
-      transition: background 0.1s;
+      flex-wrap: wrap;
     }
-    .lb-row:last-child { border-bottom: none; }
+    .lb-toolbar .lb-find { flex: 1; min-width: 180px; margin-bottom: 0; }
+    #lb-fixtures-toggle.active { background: var(--c-accent-light); border-color: var(--c-accent); color: var(--c-accent); }
+    .lb-table-wrap { overflow-x: auto; }
+    .lb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .lb-table th {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-3);
+      text-align: left;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .lb-table th.lb-th-rank { width: 36px; text-align: center; }
+    .lb-table th.lb-th-score { text-align: right; }
+    .lb-table td {
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--c-border);
+      vertical-align: middle;
+    }
+    .lb-table tbody tr.lb-participant-end td { border-bottom: 1px solid var(--c-border-mid); }
+    .lb-table tbody tr:last-child td { border-bottom: none; }
+    .lb-table tr.lb-row-highlight td { background: var(--c-accent-light); }
     .lb-rank {
       font-size: 13px;
       font-weight: 600;
       color: var(--c-text-3);
-      min-width: 26px;
       text-align: center;
       font-family: var(--font-mono);
+      vertical-align: middle;
     }
     .lb-rank.r1 { color: var(--c-gold); font-size: 16px; }
     .lb-rank.r2 { color: var(--c-text-2); font-size: 15px; }
     .lb-rank.r3 { color: var(--c-amber); font-size: 14px; }
+    .lb-player-cell { min-width: 130px; max-width: 160px; }
+    .lb-player-inner { display: flex; align-items: center; gap: 10px; }
+    .lb-player-name {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      word-break: break-word;
+    }
     .avatar {
       width: 38px; height: 38px;
       border-radius: 50%;
@@ -204,15 +238,59 @@
       overflow: hidden;
     }
     .avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .lb-info { flex: 1; min-width: 0; }
-    .lb-name {
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
+    .lb-team-cell { font-weight: 500; white-space: nowrap; }
+    .lb-team-eliminated { opacity: 0.5; text-decoration: line-through; }
+    .lb-num-cell { font-family: var(--font-mono); font-size: 12px; text-align: center; width: 40px; }
+    .lb-pos-cell { font-size: 12px; color: var(--c-text-2); white-space: nowrap; }
+    .lb-fixture-cell {
+      font-size: 11px;
+      color: var(--c-text-3);
+      max-width: 220px;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    .lb-teams { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .lb-score-cell { text-align: right; white-space: nowrap; vertical-align: middle; }
+    .lb-points { font-size: 18px; font-weight: 600; color: var(--c-text); line-height: 1; }
+    .lb-pts-label { font-size: 11px; color: var(--c-text-3); }
+    .lb-pts-combined { font-size: 10px; color: var(--c-text-3); margin-top: 1px; }
+    .lb-prize { font-size: 11px; color: var(--c-accent); font-weight: 500; margin-top: 2px; }
+    .lb-cascade { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
+    .lb-phase-note { font-size: 12px; color: var(--c-text-2); margin: -6px 0 12px; line-height: 1.4; }
+    .lb-find {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .lb-find input {
+      flex: 1;
+      padding: 7px 12px;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      font-size: 13px;
+      background: var(--c-surface);
+      color: var(--c-text);
+    }
+    .lb-find input:focus {
+      outline: none;
+      border-color: var(--c-accent);
+      box-shadow: 0 0 0 2px var(--c-accent-light);
+    }
+    .phase-pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .phase-pill.phase-group { background: var(--c-amber-light); color: var(--c-amber); }
+    .phase-pill.phase-knockout { background: var(--c-accent-light); color: var(--c-accent); }
+
+    /* team-tag kept for bracket / draw views */
     .team-tag {
       display: inline-flex;
       align-items: center;
@@ -224,38 +302,8 @@
       border: 1px solid var(--c-border);
       color: var(--c-text-2);
     }
-    .team-tag.alive {
-      background: var(--c-accent-light);
-      border-color: #a8d5bc;
-      color: var(--c-accent);
-      font-weight: 500;
-    }
-    .team-tag.eliminated {
-      text-decoration: line-through;
-      opacity: 0.5;
-    }
-    .team-tag.cpu {
-      opacity: 0.4;
-      font-style: italic;
-    }
-    .lb-right { text-align: right; flex-shrink: 0; }
-    .lb-points { font-size: 18px; font-weight: 600; color: var(--c-text); line-height: 1; }
-    .lb-pts-label { font-size: 11px; color: var(--c-text-3); }
-    .lb-prize { font-size: 11px; color: var(--c-accent); font-weight: 500; margin-top: 2px; }
-    .lb-cascade { font-size: 11px; color: var(--c-text-3); margin-top: 2px; }
-    .progress-bar {
-      height: 3px;
-      background: var(--c-border);
-      border-radius: 2px;
-      margin-top: 5px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--c-accent);
-      border-radius: 2px;
-      transition: width 0.6s ease;
-    }
+    .team-tag.alive { background: var(--c-accent-light); border-color: #a8d5bc; color: var(--c-accent); font-weight: 500; }
+    .team-tag.eliminated { text-decoration: line-through; opacity: 0.5; }
 
     /* =========================================================
        BADGES
@@ -489,7 +537,14 @@
     .group-table tr:last-child td { border-bottom: none; }
     .group-table tr.qualified td { background: var(--c-accent-light); }
     .group-table tr.maybe-qualified td { background: var(--c-amber-light); }
-    .team-cell { display: flex; align-items: center; gap: 7px; }
+    .group-table tr.owned-team td:first-child { box-shadow: inset 3px 0 0 var(--c-accent); }
+    .group-owner {
+      font-size: 9px; font-weight: 700;
+      padding: 1px 5px; border-radius: 10px;
+      flex-shrink: 0; margin-left: auto;
+      cursor: help;
+    }
+    .team-cell { display: flex; align-items: center; gap: 7px; width: 100%; }
     .team-name-cell { font-weight: 500; }
     .pts-cell { font-weight: 600; color: var(--c-accent); }
     .gd-cell { font-family: var(--font-mono); font-size: 12px; }
@@ -802,15 +857,15 @@
         <div class="header-title" id="sweepstakes-name">World Cup Sweepstakes 2026</div>
         <div class="header-sub" id="header-sub">Loading...</div>
       </div>
+      <span id="phase-pill" class="phase-pill"></span>
     </div>
     <nav class="nav-tabs">
-      <button class="nav-tab active" onclick="showTab('leaderboard')">🏆 <span>Leaderboard</span></button>
-      <button class="nav-tab" onclick="showTab('draw')">🎴 <span>Draw</span></button>
-      <button class="nav-tab" onclick="showTab('groups')">📊 <span>Groups</span></button>
-      <button class="nav-tab" onclick="showTab('bracket')">🔢 <span>Bracket</span></button>
-      <button class="nav-tab" onclick="showTab('prizes')">💰 <span>Prizes</span></button>
+      <button class="nav-tab active" data-tab="leaderboard" onclick="showTab('leaderboard')">🏆 <span>Leaderboard</span></button>
+      <button class="nav-tab" id="nav-tab-draw" data-tab="draw" onclick="showTab('draw')">🎴 <span>Draw</span></button>
+      <button class="nav-tab" data-tab="groups" onclick="showTab('groups')">📊 <span>Groups</span></button>
+      <button class="nav-tab" data-tab="bracket" onclick="showTab('bracket')">🔢 <span>Bracket</span></button>
+      <button class="nav-tab" data-tab="prizes" onclick="showTab('prizes')">💰 <span>Prizes</span></button>
     </nav>
-    <div class="last-updated" id="last-updated"></div>
   </div>
 </header>
 
@@ -826,7 +881,16 @@
     <div id="draw-selector" class="tab-selector" style="display:none"></div>
 
     <div class="card" id="leaderboard-card">
-      <div class="card-title">Standings</div>
+      <div class="card-title" id="leaderboard-card-title">Standings</div>
+      <div id="leaderboard-phase-note" class="lb-phase-note" style="display:none"></div>
+      <div class="lb-toolbar">
+        <div class="lb-find">
+          <input type="search" id="lb-find-input" list="lb-find-names" placeholder="Find a participant…" autocomplete="off" />
+          <datalist id="lb-find-names"></datalist>
+          <button type="button" id="lb-find-clear" class="btn btn-sm">Show all</button>
+        </div>
+        <button type="button" id="lb-fixtures-toggle" class="btn btn-sm">Show fixtures</button>
+      </div>
       <div id="leaderboard-list"></div>
     </div>
 
@@ -1055,8 +1119,217 @@ function participantScore(p) {
   return Math.max(...p.teams.map(t => ROUND_POINTS[teamStatus[t]] || 0));
 }
 
+const KNOCKOUT_STAGES = ["LAST_32","ROUND_OF_32","LAST_16","ROUND_OF_16",
+  "QUARTER_FINALS","SEMI_FINALS","THIRD_PLACE","FINAL"];
+
+function isKnockoutPhase() {
+  return (apiData.matches || []).some(m => {
+    if (!["FINISHED","IN_PLAY","PAUSED"].includes(m.status)) return false;
+    const stage = (m.stage || "").toUpperCase();
+    return KNOCKOUT_STAGES.some(k => stage === k || stage.includes(k));
+  });
+}
+
+function teamGroupPoints(teamName) {
+  return standingsTable[teamName]?.points ?? 0;
+}
+
+function participantGroupBest(p) {
+  if (!p.teams || !p.teams.length) return 0;
+  return Math.max(...p.teams.map(t => teamGroupPoints(t)));
+}
+
+function participantGroupTotal(p) {
+  if (!p.teams || !p.teams.length) return 0;
+  return p.teams.reduce((sum, t) => sum + teamGroupPoints(t), 0);
+}
+
+function compareParticipants(a, b) {
+  if (isKnockoutPhase()) return participantScore(b) - participantScore(a);
+  const bestDiff = participantGroupBest(b) - participantGroupBest(a);
+  if (bestDiff !== 0) return bestDiff;
+  return participantGroupTotal(b) - participantGroupTotal(a);
+}
+
 function sortedParticipants(draw) {
-  return [...draw.participants].sort((a,b) => participantScore(b) - participantScore(a));
+  return [...draw.participants].sort(compareParticipants);
+}
+
+// --- Shared participant / group helpers ---
+const VALID_TABS = ['leaderboard', 'draw', 'groups', 'bracket', 'prizes'];
+const UPCOMING_STATUSES = ['TIMED', 'SCHEDULED', 'IN_PLAY', 'PAUSED'];
+const GROUP_RANK_LABELS = ['1st', '2nd', '3rd', '4th'];
+
+function getAllParticipants() {
+  return (MANUAL_DATA.draws || []).flatMap(d => d.participants || []).filter(p => !p.cpu);
+}
+
+function getOwner(teamName) {
+  if (!teamName) return null;
+  const norm = normaliseTeamName(teamName);
+  return getAllParticipants().find(p =>
+    p.teams && p.teams.some(t => normaliseTeamName(t) === norm)
+  ) || null;
+}
+
+function ownerBadgeEl(teamName) {
+  const p = getOwner(teamName);
+  if (!p) return '';
+  const allParticipants = (MANUAL_DATA.draws || []).flatMap(d => d.participants || []);
+  const idx = allParticipants.indexOf(p);
+  const [bg, fg] = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+  const initials = p.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  const title = p.name.replace(/"/g, '&quot;');
+  return `<span class="group-owner" title="${title}" style="background:${bg};color:${fg}">${initials}</span>`;
+}
+
+function getGroupStandings(group) {
+  return ALL_TEAMS.filter(t => t.group === group)
+    .map(t => standingsTable[t.name] || {
+      ...t, played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, points: 0
+    })
+    .sort((a, b) =>
+      b.points - a.points ||
+      (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst) ||
+      b.goalsFor - a.goalsFor
+    );
+}
+
+function teamGroupRank(teamName) {
+  const team = ALL_TEAMS.find(t => t.name === teamName);
+  if (!team) return null;
+  const standings = getGroupStandings(team.group);
+  const idx = standings.findIndex(t => t.name === teamName);
+  if (idx < 0) return null;
+  const row = standings[idx];
+  if (!row.played) return null;
+  return { rank: idx + 1, group: team.group, label: GROUP_RANK_LABELS[idx] };
+}
+
+function isTeamEliminated(teamName) {
+  if (isKnockoutPhase()) return teamStatus[teamName] === 'OUT';
+  const row = standingsTable[teamName];
+  if (!row || row.played < 3) return false;
+  const rank = teamGroupRank(teamName);
+  return rank ? rank.rank > 2 : false;
+}
+
+function getCurrentMatchday() {
+  const groupMatches = (apiData.matches || []).filter(m => {
+    if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(m.status)) return false;
+    return (m.stage || '').toUpperCase().includes('GROUP');
+  });
+  if (groupMatches.length) {
+    return Math.max(...groupMatches.map(m => m.matchday || 0));
+  }
+  return apiData.competition?.season?.currentMatchday || 1;
+}
+
+function getNextMatchForTeam(teamName) {
+  const norm = normaliseTeamName(teamName);
+  return (apiData.matches || [])
+    .filter(m => {
+      if (!UPCOMING_STATUSES.includes(m.status)) return false;
+      const h = normaliseTeamName(m.homeTeam?.name);
+      const a = normaliseTeamName(m.awayTeam?.name);
+      return h === norm || a === norm;
+    })
+    .sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate))[0] || null;
+}
+
+function formatNextMatchLine(teamName, match) {
+  const norm = normaliseTeamName(teamName);
+  const h = normaliseTeamName(match.homeTeam?.name);
+  const a = normaliseTeamName(match.awayTeam?.name);
+  const opp = h === norm ? a : h;
+  return `${teamFlag(teamName)} ${teamName} vs ${teamFlag(opp)} ${opp} · ${formatMatchTime(match.utcDate)}`;
+}
+
+function formatNextMatchShort(teamName, match) {
+  const norm = normaliseTeamName(teamName);
+  const h = normaliseTeamName(match.homeTeam?.name);
+  const a = normaliseTeamName(match.awayTeam?.name);
+  const opp = h === norm ? a : h;
+  return `vs ${teamFlag(opp)} ${opp} · ${formatMatchTime(match.utcDate)}`;
+}
+
+function getParticipantNextMatches(p) {
+  return (p.teams || [])
+    .map(t => {
+      const m = getNextMatchForTeam(t);
+      return m ? formatNextMatchLine(t, m) : null;
+    })
+    .filter(Boolean);
+}
+
+function updatePhasePill() {
+  const pill = document.getElementById('phase-pill');
+  if (!pill) return;
+  const knockout = isKnockoutPhase();
+  pill.textContent = knockout ? 'Knockouts' : 'Group stage';
+  pill.className = 'phase-pill ' + (knockout ? 'phase-knockout' : 'phase-group');
+}
+
+function applyLbFind(scroll) {
+  const input = document.getElementById('lb-find-input');
+  if (!input) return;
+  const q = input.value.trim().toLowerCase();
+  const url = new URL(location.href);
+  if (q) url.searchParams.set('find', input.value.trim());
+  else url.searchParams.delete('find');
+  history.replaceState(null, '', url.pathname + url.search + location.hash);
+
+  const rows = document.querySelectorAll('#leaderboard-list tr[data-name]');
+  let firstMatch = null;
+  rows.forEach(row => {
+    const name = (row.dataset.name || '').toLowerCase();
+    const match = !q || name.includes(q);
+    row.style.display = match ? '' : 'none';
+    row.classList.toggle('lb-row-highlight', !!q && match);
+    if (match && q && !firstMatch) firstMatch = row;
+  });
+  if (scroll && firstMatch) {
+    firstMatch.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+let showFixtures = false;
+
+function syncFixturesToggle() {
+  const btn = document.getElementById('lb-fixtures-toggle');
+  if (!btn) return;
+  btn.textContent = showFixtures ? 'Hide fixtures' : 'Show fixtures';
+  btn.classList.toggle('active', showFixtures);
+}
+
+function initFixturesToggle() {
+  const btn = document.getElementById('lb-fixtures-toggle');
+  if (!btn || btn.dataset.init) return;
+  btn.dataset.init = '1';
+  btn.addEventListener('click', () => {
+    showFixtures = !showFixtures;
+    syncFixturesToggle();
+    renderLeaderboard();
+  });
+  syncFixturesToggle();
+}
+
+function initLbFind() {
+  const input = document.getElementById('lb-find-input');
+  const clearBtn = document.getElementById('lb-find-clear');
+  if (!input || input.dataset.init) return;
+  input.dataset.init = '1';
+  input.addEventListener('input', () => applyLbFind(false));
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    applyLbFind(false);
+  });
+  const params = new URLSearchParams(location.search);
+  const find = params.get('find') || params.get('name');
+  if (find) {
+    input.value = find;
+    requestAnimationFrame(() => applyLbFind(true));
+  }
 }
 
 // --- Prize calculation ---
@@ -1072,7 +1345,7 @@ function getPrizeWinners() {
   const pot = fullPot - (cfg.entryFee || 0); // deduct wooden spoon (entry back)
   const allSorted = (MANUAL_DATA.draws||[])
     .flatMap(d => d.participants||[])
-    .sort((a,b) => participantScore(b) - participantScore(a));
+    .sort(compareParticipants);
   const paidSorted = allSorted.filter(p => p.entry === "paid" && !p.cpu);
   return {
     first:  paidSorted[0] || null,
@@ -1118,13 +1391,25 @@ function formatMatchTime(dateStr) {
 let activeDraw = 0;
 let activeDrawTab = 0;
 
-function showTab(name) {
+function showTab(name, opts = {}) {
+  if (name === 'draw' && cfg.drawDone) {
+    showTab('leaderboard', opts);
+    return;
+  }
+  if (!VALID_TABS.includes(name)) name = 'leaderboard';
+
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById(`tab-${name}`).classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(b => {
-    if (b.getAttribute('onclick').includes(name)) b.classList.add('active');
+    if (b.dataset.tab === name) b.classList.add('active');
   });
+
+  if (!opts.skipHash) {
+    const url = new URL(location.href);
+    history.replaceState(null, '', url.pathname + url.search + '#' + name);
+  }
+
   if (name === 'leaderboard') renderLeaderboard();
   if (name === 'draw') renderDraw();
   if (name === 'groups') renderGroups();
@@ -1137,8 +1422,10 @@ function renderLeaderboard() {
   const draws = getDraws();
   const pot = getPot() - (cfg.entryFee || 0); // deduct wooden spoon (entry back)
   const allParticipants = (MANUAL_DATA.draws||[]).flatMap(d => d.participants||[]);
-  const teamsAlive = ALL_TEAMS.filter(t => !["OUT"].includes(teamStatus[t.name])).length;
   const paidCount = allParticipants.filter(p => p.entry==="paid" && !p.cpu).length;
+  const knockout = isKnockoutPhase();
+  const teamsAlive = ALL_TEAMS.filter(t => teamStatus[t.name] !== 'OUT').length;
+  const matchday = getCurrentMatchday();
 
   // Stats row
   document.getElementById('stats-row').innerHTML = `
@@ -1153,9 +1440,9 @@ function renderLeaderboard() {
       <div class="stat-sub">${cfg.entryFee||20} per entry</div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Teams alive</div>
-      <div class="stat-value">${teamsAlive}</div>
-      <div class="stat-sub">of 48 teams</div>
+      <div class="stat-label">${knockout ? 'Teams alive' : 'Group stage'}</div>
+      <div class="stat-value">${knockout ? teamsAlive : 'Matchday ' + matchday}</div>
+      <div class="stat-sub">${knockout ? 'of 48 teams' : 'Knockouts from 28 Jun'}</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Last updated</div>
@@ -1181,60 +1468,132 @@ function renderLeaderboard() {
   }
 
   const sorted = sortedParticipants(draw);
-  const allSortedPaid = sorted.filter(p => p.entry==="paid" && !p.cpu);
   let paidPrizeIdx = 0;
+
+  document.getElementById('leaderboard-card-title').textContent =
+    knockout ? 'Standings' : 'Group stage';
+  const phaseNote = document.getElementById('leaderboard-phase-note');
+  if (knockout) {
+    phaseNote.style.display = 'none';
+  } else {
+    phaseNote.style.display = 'block';
+    phaseNote.textContent =
+      'Ranked by your best team\u2019s group points. Knockout scoring starts when the first knockout match kicks off.';
+  }
 
   const rows = sorted.map((p, i) => {
     const idx = draw.participants.indexOf(p);
-    const score = participantScore(p);
+    const score = knockout ? participantScore(p) : participantGroupBest(p);
+    const groupTotal = participantGroupTotal(p);
     const isCpu = p.cpu || p.entry === "cpu";
-    if (isCpu) return ''; // hide CPUs from leaderboard view
+    if (isCpu) return '';
 
     const rankCls = i===0?'r1':i===1?'r2':i===2?'r3':'';
     const badgeCls = p.entry==='paid'?'badge-paid':p.entry==='bragging'?'badge-bragging':'badge-charity';
     const badgeTxt = p.entry==='paid'?'':p.entry==='bragging'?'Bragging':'Charity';
+    const badgeHtml = badgeTxt
+      ? `<span class="badge ${badgeCls}" style="margin-left:4px;display:inline-block;margin-top:2px">${badgeTxt}${p.entry==='charity'&&p.charity?' → '+p.charity:''}</span>`
+      : '';
 
-    const teamTags = (p.teams||[]).map(t => {
-      const s = teamStatus[t] || 'Group';
-      const cls = s==='OUT'?'eliminated':'alive';
-      return `<span class="team-tag ${cls}">${teamFlag(t)} ${t}</span>`;
-    }).join('') || '<span style="font-size:12px;color:var(--c-text-3)">No teams yet</span>';
+    const combinedHtml = !knockout && (p.teams||[]).length > 1
+      ? `<div class="lb-pts-combined">${groupTotal} combined</div>`
+      : '';
 
-    const pct = Math.round((score / 32) * 100);
-
-    // Prize annotation
     let prizeHtml = '';
-    if (p.entry==='paid' && pot>0 && paidPrizeIdx<3) {
+    if (knockout && p.entry==='paid' && pot>0 && paidPrizeIdx<3) {
       const fixedPrizes = cfg.prizes || PRIZE_SPLITS.map(s => Math.round(pot * s));
-      const amt = fixedPrizes[paidPrizeIdx];
-      prizeHtml = `<div class="lb-prize">${cfg.currency||'$'}${amt} prize</div>`;
+      prizeHtml = `<div class="lb-prize">${cfg.currency||'$'}${fixedPrizes[paidPrizeIdx]} prize</div>`;
       paidPrizeIdx++;
-    } else if ((p.entry==='bragging'||p.entry==='charity') && i<3) {
+    } else if (knockout && (p.entry==='bragging'||p.entry==='charity') && i<3) {
       prizeHtml = `<div class="lb-cascade">Prize cascades ↓</div>`;
     }
 
-    return `
-      <div class="lb-row">
-        <div class="lb-rank ${rankCls}">${i+1}</div>
-        ${avatarEl(p.name, idx, p.avatar||null)}
-        <div class="lb-info">
-          <div class="lb-name">
-            ${p.name}
-            ${badgeTxt ? `<span class="badge ${badgeCls}" style="margin-left:6px">${badgeTxt}${p.entry==='charity'&&p.charity?' → '+p.charity:''}</span>` : ''}
-          </div>
-          <div class="lb-teams">${teamTags}</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    const teams = (p.teams && p.teams.length) ? p.teams : [];
+    const rowSpan = Math.max(teams.length, 1);
+    const safeName = p.name.replace(/"/g, '&quot;');
+    const midColSpan = (knockout ? 2 : 3) + (showFixtures ? 1 : 0);
+
+    const scoreCell = `
+      <td class="lb-score-cell" rowspan="${rowSpan}">
+        <div class="lb-points">${score}</div>
+        <div class="lb-pts-label">${knockout ? 'pts' : 'group pts'}</div>
+        ${combinedHtml}${prizeHtml}
+      </td>`;
+
+    const playerCell = `
+      <td class="lb-player-cell" rowspan="${rowSpan}">
+        <div class="lb-player-inner">
+          ${avatarEl(p.name, idx, p.avatar||null)}
+          <div class="lb-player-name">${p.name}${badgeHtml}</div>
         </div>
-        <div class="lb-right">
-          <div class="lb-points">${score}</div>
-          <div class="lb-pts-label">pts</div>
-          ${prizeHtml}
-        </div>
-      </div>`;
+      </td>`;
+
+    const rankCell = `<td class="lb-rank ${rankCls}" rowspan="${rowSpan}">${i + 1}</td>`;
+
+    function teamCells(t) {
+      const elim = isTeamEliminated(t);
+      const teamCls = elim ? 'lb-team-eliminated' : '';
+      const nextMatch = getNextMatchForTeam(t);
+      const fixtureCell = showFixtures
+        ? `<td class="lb-fixture-cell">${nextMatch ? formatNextMatchShort(t, nextMatch) : '—'}</td>`
+        : '';
+      if (knockout) {
+        const status = teamStatus[t] || 'Group';
+        const statusLabels = { Group:'Group', R32:'R32', QF:'QF', SF:'SF', '3rd':'3rd', RU:'Runner-up', W:'Winner', OUT:'Out' };
+        return `
+          <td class="lb-team-cell ${teamCls}">${teamFlag(t)} ${t}</td>
+          <td class="lb-pos-cell">${statusLabels[status] || status}</td>
+          ${fixtureCell}`;
+      }
+      const gr = teamGroupRank(t);
+      const pos = gr ? `${gr.label} · ${gr.group}` : '—';
+      return `
+        <td class="lb-team-cell ${teamCls}">${teamFlag(t)} ${t}</td>
+        <td class="lb-num-cell">${teamGroupPoints(t)}</td>
+        <td class="lb-pos-cell">${pos}</td>
+        ${fixtureCell}`;
+    }
+
+    if (!teams.length) {
+      return `<tr class="lb-participant-row lb-participant-end" data-name="${safeName}">
+        ${rankCell}${playerCell}
+        <td colspan="${midColSpan}" style="color:var(--c-text-3);font-size:12px">No teams yet</td>
+        ${scoreCell}
+      </tr>`;
+    }
+
+    return teams.map((t, ti) => {
+      const endCls = ti === teams.length - 1 ? ' lb-participant-end' : '';
+      if (ti === 0) {
+        return `<tr class="lb-participant-row${endCls}" data-name="${safeName}">
+          ${rankCell}${playerCell}${teamCells(t)}${scoreCell}
+        </tr>`;
+      }
+      return `<tr class="lb-team-row${endCls}" data-name="${safeName}">${teamCells(t)}</tr>`;
+    }).join('');
   }).join('');
 
-  document.getElementById('leaderboard-list').innerHTML = rows ||
-    '<div class="empty"><div class="empty-icon">🏆</div>Run the draw to see standings</div>';
+  const fixtureHdr = showFixtures ? '<th>Next</th>' : '';
+  const tableHead = knockout
+    ? `<tr><th class="lb-th-rank">#</th><th></th><th>Team</th><th>Round</th>${fixtureHdr}<th class="lb-th-score">Score</th></tr>`
+    : `<tr><th class="lb-th-rank">#</th><th></th><th>Team</th><th>Pts</th><th>Pos</th>${fixtureHdr}<th class="lb-th-score">Score</th></tr>`;
+
+  document.getElementById('leaderboard-list').innerHTML = rows
+    ? `<div class="lb-table-wrap"><table class="lb-table"><thead>${tableHead}</thead><tbody>${rows}</tbody></table></div>`
+    : '<div class="empty"><div class="empty-icon">🏆</div>Run the draw to see standings</div>';
+
+  syncFixturesToggle();
+
+  const datalist = document.getElementById('lb-find-names');
+  if (datalist) {
+    datalist.innerHTML = sorted
+      .filter(p => !p.cpu && p.entry !== 'cpu')
+      .map(p => `<option value="${p.name.replace(/"/g, '&quot;')}">`)
+      .join('');
+  }
+
+  updatePhasePill();
+  if (document.getElementById('lb-find-input')?.value) applyLbFind(false);
 
   renderSpecials();
 }
@@ -1629,15 +1988,17 @@ function renderGroups() {
   }
 
   container.innerHTML = groups.map(g => {
-    const teams = ALL_TEAMS.filter(t => t.group === g)
-      .map(t => standingsTable[t.name] || { ...t, played:0,won:0,drawn:0,lost:0,goalsFor:0,goalsAgainst:0,points:0 })
-      .sort((a,b) => b.points-a.points || (b.goalsFor-b.goalsAgainst)-(a.goalsFor-a.goalsAgainst) || b.goalsFor-a.goalsFor);
+    const teams = getGroupStandings(g);
 
     const rows = teams.map((t, i) => {
       const gd = t.goalsFor - t.goalsAgainst;
-      const rowCls = i<2 ? 'qualified' : i===2 ? 'maybe-qualified' : '';
+      const owner = getOwner(t.name);
+      const rowCls = [
+        i < 2 ? 'qualified' : i === 2 ? 'maybe-qualified' : '',
+        owner ? 'owned-team' : ''
+      ].filter(Boolean).join(' ');
       return `<tr class="${rowCls}">
-        <td><div class="team-cell"><span>${t.flag}</span><span class="team-name-cell">${t.name}</span></div></td>
+        <td><div class="team-cell"><span>${t.flag}</span><span class="team-name-cell">${t.name}</span>${owner ? ownerBadgeEl(t.name) : ''}</div></td>
         <td>${t.played}</td><td>${t.won}</td><td>${t.drawn}</td><td>${t.lost}</td>
         <td class="gd-cell">${gd>=0?'+':''}${gd}</td>
         <td class="pts-cell">${t.points}</td>
@@ -1869,14 +2230,21 @@ function initHeader() {
   document.getElementById('header-sub').textContent = total > 0
     ? `${total} participants · ${cfg.teamsPerPerson||2} teams each`
     : 'Group stage underway · Knockout from June 28';
-  if (apiData.lastUpdated) {
-    document.getElementById('last-updated').textContent = 'Updated ' + formatMatchTime(apiData.lastUpdated);
-  }
+  const drawTab = document.getElementById('nav-tab-draw');
+  if (drawTab) drawTab.style.display = cfg.drawDone ? 'none' : '';
+  updatePhasePill();
 }
 
 // --- INIT ---
 initHeader();
-renderLeaderboard();
+initLbFind();
+initFixturesToggle();
+showTab(location.hash.slice(1) || 'leaderboard');
+
+window.addEventListener('hashchange', () => {
+  const tab = location.hash.slice(1) || 'leaderboard';
+  showTab(tab, { skipHash: true });
+});
 </script>
 </body>
 </html>
