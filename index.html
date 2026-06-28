@@ -734,79 +734,144 @@
       padding: 1.5rem 1rem 2rem;
       margin: 0 -0.25rem;
     }
-    .bkt-outer { overflow-x: auto; padding-bottom: .5rem; }
+    body.knockout-bracket-active .main {
+      max-width: none;
+      padding: 0.5rem 0.75rem 0.25rem;
+    }
+    body.knockout-bracket-active #tab-bracket {
+      padding: 0.25rem 0.5rem 0;
+      margin: 0;
+    }
+    .bkt-fit-outer { padding: 24px 0 8px; }
+    .bkt-fit { width: 100%; overflow: hidden; display: flex; justify-content: center; }
+    .bkt-scale { transform-origin: top center; flex-shrink: 0; }
+    .bkt-outer { overflow: visible; padding-bottom: 0; }
     .bkt {
       display: flex; align-items: stretch;
-      min-width: 920px; max-width: 1400px; margin: 0 auto;
+      width: max-content; max-width: 100%; margin: 0 auto;
     }
     .bkt-half { flex: 1; display: flex; }
     .bkt-half.right { flex-direction: row-reverse; }
-    .bkt-col { flex: 1; display: flex; flex-direction: column; min-width: 118px; }
+    .bkt-col { flex: 1; display: flex; flex-direction: column; min-width: 88px; }
     .bkt-col-lbl {
       font-family: var(--font-display);
-      font-size: 11px; letter-spacing: .18em;
+      font-size: 9px; letter-spacing: .14em;
       text-transform: uppercase; text-align: center;
-      color: var(--c-accent); padding: 5px 4px 8px;
+      color: var(--c-accent); padding: 3px 2px 5px;
       border-bottom: 1px solid var(--c-border);
     }
     .bkt-col-matches {
       flex: 1; display: flex; flex-direction: column;
-      justify-content: space-around; padding: 6px 0;
+      justify-content: space-around; padding: 3px 0;
     }
     .bkt-pair { flex: 1; display: flex; flex-direction: column; position: relative; }
     .bkt-half.left  .bkt-pair::after { content:''; position:absolute; right:5px; top:25%; height:50%; border-right:2px solid var(--c-border); }
     .bkt-half.right .bkt-pair::after { content:''; position:absolute; left:5px;  top:25%; height:50%; border-left:2px solid var(--c-border); }
-    .bkt-slot { flex: 1; display: flex; align-items: center; position: relative; }
-    .bkt-half.left  .bkt-slot { padding: 3px 18px 3px 4px; }
-    .bkt-half.left  .bkt-slot::after { content:''; position:absolute; right:5px; top:50%; width:13px; border-top:2px solid var(--c-border); }
-    .bkt-half.right .bkt-slot { padding: 3px 4px 3px 18px; }
-    .bkt-half.right .bkt-slot::after { content:''; position:absolute; left:5px;  top:50%; width:13px; border-top:2px solid var(--c-border); }
+    .bkt-slot { flex: 1; display: flex; align-items: center; position: relative; overflow: visible; }
+    .bkt-half.left  .bkt-slot { padding: 2px 14px 2px 3px; }
+    .bkt-half.left  .bkt-slot::after { content:''; position:absolute; right:4px; top:50%; width:10px; border-top:2px solid var(--c-border); }
+    .bkt-half.right .bkt-slot { padding: 2px 3px 2px 14px; }
+    .bkt-half.right .bkt-slot::after { content:''; position:absolute; left:4px;  top:50%; width:10px; border-top:2px solid var(--c-border); }
     .bkt-half.left  .bkt-col:last-child .bkt-slot { padding-right: 4px; }
     .bkt-half.left  .bkt-col:last-child .bkt-slot::after { display: none; }
     .bkt-half.right .bkt-col:last-child .bkt-slot { padding-left: 4px; }
     .bkt-half.right .bkt-col:last-child .bkt-slot::after { display: none; }
     .bkt-match {
       width: 100%; background: var(--c-surface);
-      border: 1px solid var(--c-border); border-radius: 7px; overflow: hidden;
+      border: 1px solid var(--c-border); border-radius: 7px; overflow: visible;
     }
-    .bkt-team { display: flex; align-items: center; gap: 4px; padding: 5px 7px; flex-wrap: nowrap; }
+    .bkt-team { display: flex; align-items: center; gap: 3px; padding: 3px 5px; flex-wrap: nowrap; position: relative; }
     .bkt-team + .bkt-team { border-top: 1px solid var(--c-border); }
     .bkt-team.w { background: var(--c-accent-light); }
     .bkt-team.w .bkt-tname { color: var(--c-accent); font-weight: 600; }
-    .bkt-flag { font-size: 13px; flex-shrink: 0; line-height: 1; }
-    .bkt-tname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--c-text-2); font-size: 11px; }
-    .bkt-score { font-weight: 700; font-size: 12px; color: var(--c-text); font-family: monospace; min-width: 12px; text-align: center; flex-shrink: 0; }
+    .bkt-flag { font-size: 11px; flex-shrink: 0; line-height: 1; }
+    .bkt-tname { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--c-text-2); font-size: 10px; }
+    .bkt-score { font-weight: 700; font-size: 11px; color: var(--c-text); font-family: monospace; min-width: 10px; text-align: center; flex-shrink: 0; }
     .bkt-match.tbd .bkt-tname { color: var(--c-text-3); font-style: italic; }
     .bkt-match.tbd .bkt-flag  { opacity: .4; }
+    .bkt-match-time {
+      font-size: 8px;
+      color: var(--c-text-3);
+      text-align: center;
+      padding: 0 4px 3px;
+      font-family: var(--font-mono);
+      line-height: 1.2;
+      border-top: 1px solid var(--c-border);
+      background: var(--c-bg);
+      border-radius: 0 0 6px 6px;
+    }
+    .bkt-match-time.live { color: var(--c-accent); font-weight: 600; }
+    .bkt-match:has(.bkt-match-time) .bkt-team:last-child { border-radius: 0; }
     .bkt-owner {
       font-size: 9px; font-weight: 700;
       padding: 1px 5px; border-radius: 10px;
       flex-shrink: 0; white-space: nowrap; margin-left: 1px;
     }
     .bkt-final-col {
-      min-width: 148px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 10px; padding: 0 6px;
+      min-width: 128px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 6px; padding: 0 4px;
     }
     .bkt-final-trophy { line-height: 1; }
+    .bkt-final-trophy img { width: 44px !important; }
     .bkt-final-title {
       font-family: var(--font-display);
-      font-size: 1.4rem; letter-spacing: .14em;
+      font-size: 1.05rem; letter-spacing: .12em;
       color: var(--c-gold); text-align: center;
       text-shadow: 0 0 20px rgba(255,215,0,.4);
     }
     .bkt-final-match { width: 100%; }
     .bkt-final-match .bkt-match { background: rgba(255,215,0,.05); border-color: rgba(255,215,0,.35); }
-    .bkt-winner-box {
-      width: 100%; text-align: center; padding: 10px 8px;
-      background: var(--c-accent-light);
-      border: 1.5px solid var(--c-accent); border-radius: 8px;
+    .bkt-prizes {
+      width: 100%;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      overflow: hidden;
     }
-    .bkt-winner-lbl { font-family: var(--font-display); font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--c-accent); }
-    .bkt-winner-val { font-size: 11px; color: var(--c-text-3); font-style: italic; margin-top: 3px; }
+    .bkt-prize-row {
+      padding: 5px 7px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bkt-prize-row:last-child { border-bottom: none; }
+    .bkt-prize-row:first-child { background: var(--c-accent-light); }
+    .bkt-prize-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+    }
+    .bkt-prize-row:first-child .bkt-prize-hdr { color: var(--c-accent); }
+    .bkt-prize-amt {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--c-text);
+    }
+    .bkt-prize-name {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--c-text);
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bkt-prize-name.bkt-prize-tbd { color: var(--c-text-3); font-weight: 400; }
     .bkt-empty { text-align: center; padding: 3rem 1rem; color: var(--c-text-3); font-size: 13px; }
 
     /* ── Bracket: owner name + hover country tooltip ── */
-    .bkt-team { position: relative; }
+    .bkt-team:first-child { border-radius: 6px 6px 0 0; }
+    .bkt-team:last-child { border-radius: 0 0 6px 6px; }
+    .bkt-team:only-child { border-radius: 6px; }
+    .bkt-team:hover { z-index: 30; }
     .bkt-country-tooltip {
       display: none;
       position: absolute;
@@ -819,7 +884,7 @@
       padding: 3px 8px;
       border-radius: 6px;
       pointer-events: none;
-      z-index: 50;
+      z-index: 40;
       box-shadow: var(--shadow);
     }
     .bkt-country-tooltip::after {
@@ -864,7 +929,7 @@
       <button class="nav-tab" id="nav-tab-draw" data-tab="draw" onclick="showTab('draw')">🎴 <span>Draw</span></button>
       <button class="nav-tab" data-tab="groups" onclick="showTab('groups')">📊 <span>Groups</span></button>
       <button class="nav-tab" data-tab="bracket" onclick="showTab('bracket')">🔢 <span>Bracket</span></button>
-      <button class="nav-tab" data-tab="prizes" onclick="showTab('prizes')">💰 <span>Prizes</span></button>
+      <button class="nav-tab" id="nav-tab-prizes" data-tab="prizes" onclick="showTab('prizes')" style="display:none">💰 <span>Prizes</span></button>
     </nav>
   </div>
 </header>
@@ -1131,6 +1196,17 @@ function isKnockoutPhase() {
   });
 }
 
+function isGroupStageComplete() {
+  const groupMatches = (apiData.matches || []).filter(m =>
+    (m.stage || '').toUpperCase().includes('GROUP'));
+  if (!groupMatches.length) return false;
+  return groupMatches.every(m => m.status === 'FINISHED');
+}
+
+function isSimplifiedView() {
+  return isKnockoutPhase() || isGroupStageComplete();
+}
+
 function teamGroupPoints(teamName) {
   return standingsTable[teamName]?.points ?? 0;
 }
@@ -1263,12 +1339,60 @@ function getParticipantNextMatches(p) {
     .filter(Boolean);
 }
 
+function updateNavTabs() {
+  const simplified = isSimplifiedView();
+  document.querySelectorAll('.nav-tab').forEach(btn => {
+    const tab = btn.dataset.tab;
+    if (tab === 'prizes') {
+      btn.style.display = 'none';
+      return;
+    }
+    if (tab === 'draw') {
+      btn.style.display = cfg.drawDone ? 'none' : '';
+    } else if (simplified) {
+      btn.style.display = tab === 'bracket' ? '' : 'none';
+    } else {
+      btn.style.display = '';
+    }
+  });
+}
+
+function getDefaultTab() {
+  return isSimplifiedView() ? 'bracket' : 'leaderboard';
+}
+
+function fitBracketToViewport() {
+  const fit = document.querySelector('.bkt-fit');
+  const scaleEl = document.querySelector('.bkt-scale');
+  const bkt = scaleEl?.querySelector('.bkt');
+  if (!fit || !scaleEl || !bkt) return;
+
+  scaleEl.style.transform = 'none';
+  scaleEl.style.marginBottom = '';
+  fit.style.height = '';
+
+  const padBottom = 16;
+  const top = fit.getBoundingClientRect().top;
+  const availH = window.innerHeight - top - padBottom;
+  const availW = fit.clientWidth;
+  const naturalW = bkt.offsetWidth;
+  const naturalH = bkt.offsetHeight;
+  const scale = Math.min(1, availW / naturalW, availH / naturalH);
+
+  if (scale < 0.999) {
+    scaleEl.style.transform = `scale(${scale})`;
+    scaleEl.style.marginBottom = `${Math.floor(naturalH * (scale - 1))}px`;
+    fit.style.height = `${Math.ceil(naturalH * scale)}px`;
+  }
+}
+
 function updatePhasePill() {
   const pill = document.getElementById('phase-pill');
   if (!pill) return;
-  const knockout = isKnockoutPhase();
-  pill.textContent = knockout ? 'Knockouts' : 'Group stage';
-  pill.className = 'phase-pill ' + (knockout ? 'phase-knockout' : 'phase-group');
+  const postGroup = isSimplifiedView();
+  pill.textContent = postGroup ? 'Knockouts' : 'Group stage';
+  pill.className = 'phase-pill ' + (postGroup ? 'phase-knockout' : 'phase-group');
+  updateNavTabs();
 }
 
 function applyLbFind(scroll) {
@@ -1356,6 +1480,53 @@ function getPrizeWinners() {
   };
 }
 
+function finishedMatchTeams(m) {
+  if (!m || m.status !== 'FINISHED') return { winner: null, loser: null };
+  const h = normaliseTeamName(m.homeTeam?.name);
+  const a = normaliseTeamName(m.awayTeam?.name);
+  const hs = m.score?.fullTime?.home ?? m.score?.regularTime?.home ?? 0;
+  const as_ = m.score?.fullTime?.away ?? m.score?.regularTime?.away ?? 0;
+  if (hs > as_) return { winner: h, loser: a };
+  if (as_ > hs) return { winner: a, loser: h };
+  if (m.score?.penalties) {
+    const ph = m.score.penalties.home, pa = m.score.penalties.away;
+    return ph > pa ? { winner: h, loser: a } : { winner: a, loser: h };
+  }
+  return { winner: null, loser: null };
+}
+
+function confirmedPrizeRecipient(teamName) {
+  if (!teamName) return null;
+  const owner = getOwner(teamName);
+  if (!owner || owner.cpu || owner.entry !== 'paid') return null;
+  return owner;
+}
+
+function buildBracketPrizePanelHtml(fin, thirdPlace) {
+  const { pot } = getPrizeWinners();
+  const cur = cfg.currency || '$';
+  const amounts = cfg.prizes || PRIZE_SPLITS.map(s => Math.round(pot * s));
+  const finalResult = finishedMatchTeams(fin);
+  const thirdResult = finishedMatchTeams(thirdPlace);
+
+  const slots = [
+    { emoji: '🥇', label: '1st', recipient: confirmedPrizeRecipient(finalResult.winner), amt: amounts[0] },
+    { emoji: '🥈', label: '2nd', recipient: confirmedPrizeRecipient(finalResult.loser), amt: amounts[1] },
+    { emoji: '🥉', label: '3rd', recipient: confirmedPrizeRecipient(thirdResult.winner), amt: amounts[2] },
+  ];
+
+  return `<div class="bkt-prizes">${slots.map(s => {
+    const nameHtml = s.recipient
+      ? `<span class="bkt-prize-name">${s.recipient.name}</span>`
+      : `<span class="bkt-prize-name bkt-prize-tbd">—</span>`;
+    const amtHtml = pot > 0 ? `<span class="bkt-prize-amt">${cur}${s.amt}</span>` : '';
+    return `<div class="bkt-prize-row">
+      <div class="bkt-prize-hdr">${s.emoji} ${s.label} ${amtHtml}</div>
+      ${nameHtml}
+    </div>`;
+  }).join('')}</div>`;
+}
+
 // --- Find team flag ---
 function teamFlag(name) {
   return ALL_TEAMS.find(t => t.name === name)?.flag || "🏳️";
@@ -1394,10 +1565,18 @@ let activeDrawTab = 0;
 
 function showTab(name, opts = {}) {
   if (name === 'draw' && cfg.drawDone) {
-    showTab('leaderboard', opts);
+    showTab(getDefaultTab(), opts);
     return;
   }
-  if (!VALID_TABS.includes(name)) name = 'leaderboard';
+  if (isSimplifiedView() && ['leaderboard', 'groups', 'prizes'].includes(name)) {
+    showTab('bracket', opts);
+    return;
+  }
+  if (name === 'prizes') {
+    showTab('bracket', opts);
+    return;
+  }
+  if (!VALID_TABS.includes(name)) name = getDefaultTab();
 
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
@@ -1405,6 +1584,8 @@ function showTab(name, opts = {}) {
   document.querySelectorAll('.nav-tab').forEach(b => {
     if (b.dataset.tab === name) b.classList.add('active');
   });
+
+  document.body.classList.toggle('knockout-bracket-active', name === 'bracket' && isSimplifiedView());
 
   if (!opts.skipHash) {
     const url = new URL(location.href);
@@ -1414,7 +1595,10 @@ function showTab(name, opts = {}) {
   if (name === 'leaderboard') renderLeaderboard();
   if (name === 'draw') renderDraw();
   if (name === 'groups') renderGroups();
-  if (name === 'bracket') renderBracket();
+  if (name === 'bracket') {
+    renderBracket();
+    requestAnimationFrame(() => requestAnimationFrame(fitBracketToViewport));
+  }
   if (name === 'prizes') renderPrizes();
 }
 
@@ -2081,6 +2265,12 @@ function renderBracket() {
     const aLabel = aOwner ? aOwner.name : (a || 'TBD');
     const hTip = hOwner ? `${teamFlag(h)||''}  ${h}` : '';
     const aTip = aOwner ? `${teamFlag(a)||''}  ${a}` : '';
+    const live = ['IN_PLAY', 'PAUSED'].includes(m.status);
+    const timeHtml = live
+      ? `<div class="bkt-match-time live">Live</div>`
+      : (!done && m.utcDate)
+        ? `<div class="bkt-match-time">${formatMatchTime(m.utcDate)}</div>`
+        : '';
     return `<div class="bkt-match">
       <div class="bkt-team ${hWin?'w':''}">
         ${hOwner ? `<span class="bkt-flag">${teamFlag(h)||'🏳️'}</span>` : `<span class="bkt-flag">🏳️</span>`}
@@ -2094,6 +2284,7 @@ function renderBracket() {
         ${aTip ? `<span class="bkt-country-tooltip">${aTip}</span>` : ''}
         ${done ? `<span class="bkt-score">${as_}</span>` : ''}
       </div>
+      ${timeHtml}
     </div>`;
   }
 
@@ -2122,20 +2313,9 @@ function renderBracket() {
     </div>`;
   }
 
-  // ── Winner banner ──────────────────────────────────────────────
-  let winnerHtml = '<div class="bkt-winner-val">TBD</div>';
-  const fin = byRound.final[0];
-  if (fin && fin.status === 'FINISHED') {
-    const h  = normaliseTeamName(fin.homeTeam?.name);
-    const a  = normaliseTeamName(fin.awayTeam?.name);
-    const hs = fin.score?.fullTime?.home ?? 0;
-    const as_= fin.score?.fullTime?.away ?? 0;
-    const w  = hs >= as_ ? h : a;
-    const p  = getOwner(w);
-    winnerHtml = `<div class="bkt-winner-val">${teamFlag(w)} ${w}${p ? `<br><span style="color:#00e676;font-style:normal;font-weight:600">${p.name}</span>` : ''}</div>`;
-  }
-
   // ── Notice when no knockout data yet ──────────────────────────
+  const fin = byRound.final[0];
+  const thirdPlace = byRound['3rd'][0];
   const notice = hasKnockout ? '' : `
     <div class="bkt-notice">
       ⚽ Group stage underway — bracket fills in from <strong>28 June 2026</strong>.
@@ -2145,28 +2325,29 @@ function renderBracket() {
   // ── Assemble ───────────────────────────────────────────────────
   container.innerHTML = `
     ${notice}
-    <div class="bkt-outer">
-      <div class="bkt">
-        <div class="bkt-half left">
-          ${roundCol('Round of 32',  byRound.r32.slice(0, 8),  8)}
-          ${roundCol('Round of 16',  byRound.r16.slice(0, 4),  4)}
-          ${roundCol('Quarter-final',byRound.qf.slice(0,  2),  2)}
-          ${roundCol('Semi-final',   byRound.sf.slice(0,  1),  1)}
-        </div>
-        <div class="bkt-final-col">
-          <div class="bkt-final-trophy"><img src="./blinky_worldcup.png" alt="🏆" style="width:60px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 0 10px rgba(255,215,0,.5))"></div>
-          <div class="bkt-final-title">The Final</div>
-          <div class="bkt-final-match">${matchCard(fin || null)}</div>
-          <div class="bkt-winner-box">
-            <div class="bkt-winner-lbl">🥇 Winner</div>
-            ${winnerHtml}
+    <div class="bkt-fit-outer">
+      <div class="bkt-fit">
+        <div class="bkt-scale">
+          <div class="bkt">
+          <div class="bkt-half left">
+            ${roundCol('Round of 32',  byRound.r32.slice(0, 8),  8)}
+            ${roundCol('Round of 16',  byRound.r16.slice(0, 4),  4)}
+            ${roundCol('Quarter-final',byRound.qf.slice(0,  2),  2)}
+            ${roundCol('Semi-final',   byRound.sf.slice(0,  1),  1)}
           </div>
-        </div>
-        <div class="bkt-half right">
-          ${roundCol('Round of 32',  byRound.r32.slice(8, 16), 8)}
-          ${roundCol('Round of 16',  byRound.r16.slice(4,  8), 4)}
-          ${roundCol('Quarter-final',byRound.qf.slice(2,  4),  2)}
-          ${roundCol('Semi-final',   byRound.sf.slice(1,  2),  1)}
+          <div class="bkt-final-col">
+            <div class="bkt-final-trophy"><img src="./blinky_worldcup.png" alt="🏆" style="width:60px;height:auto;display:block;margin:0 auto;filter:drop-shadow(0 0 10px rgba(255,215,0,.5))"></div>
+            <div class="bkt-final-title">The Final</div>
+            <div class="bkt-final-match">${matchCard(fin || null)}</div>
+            ${buildBracketPrizePanelHtml(fin, thirdPlace)}
+          </div>
+          <div class="bkt-half right">
+            ${roundCol('Round of 32',  byRound.r32.slice(8, 16), 8)}
+            ${roundCol('Round of 16',  byRound.r16.slice(4,  8), 4)}
+            ${roundCol('Quarter-final',byRound.qf.slice(2,  4),  2)}
+            ${roundCol('Semi-final',   byRound.sf.slice(1,  2),  1)}
+          </div>
+          </div>
         </div>
       </div>
     </div>`;
@@ -2228,11 +2409,11 @@ function initHeader() {
   document.getElementById('sweepstakes-name').textContent = cfg.sweepstakesName || 'World Cup Sweepstakes 2026';
   const draws = MANUAL_DATA.draws || [];
   const total = draws.flatMap(d => d.participants||[]).filter(p=>!p.cpu).length;
+  const knockout = isKnockoutPhase();
+  const simplified = isSimplifiedView();
   document.getElementById('header-sub').textContent = total > 0
     ? `${total} participants · ${cfg.teamsPerPerson||2} teams each`
-    : 'Group stage underway · Knockout from June 28';
-  const drawTab = document.getElementById('nav-tab-draw');
-  if (drawTab) drawTab.style.display = cfg.drawDone ? 'none' : '';
+    : simplified ? 'Knockout stage' : 'Group stage underway · Knockout from June 28';
   updatePhasePill();
 }
 
@@ -2240,11 +2421,21 @@ function initHeader() {
 initHeader();
 initLbFind();
 initFixturesToggle();
-showTab(location.hash.slice(1) || 'leaderboard');
+showTab(location.hash.slice(1) || getDefaultTab());
 
 window.addEventListener('hashchange', () => {
-  const tab = location.hash.slice(1) || 'leaderboard';
+  const tab = location.hash.slice(1) || getDefaultTab();
   showTab(tab, { skipHash: true });
+});
+
+let bktResizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(bktResizeTimer);
+  bktResizeTimer = setTimeout(() => {
+    if (document.getElementById('tab-bracket')?.classList.contains('active')) {
+      fitBracketToViewport();
+    }
+  }, 100);
 });
 </script>
 </body>

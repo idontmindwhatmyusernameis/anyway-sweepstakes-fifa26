@@ -34,7 +34,7 @@ const MANUAL_DATA = {
       id: 1,
       name: "Draw 1",
       participants: [
-        { id: 1,  name: "Lochie",      entry: "paid", charity: "", teams: ["Croatia","Qatar"] },
+        { id: 1,  name: "Mike",        entry: "paid", charity: "", teams: ["Croatia","Qatar"] },
         { id: 2,  name: "Kaye",        entry: "paid", charity: "", teams: ["Switzerland","Algeria"] },
         { id: 3,  name: "James",       entry: "paid", charity: "", teams: ["Japan","Czechia"] },
         { id: 4,  name: "Ham",         entry: "paid", charity: "", teams: ["Senegal","New Zealand"] },
