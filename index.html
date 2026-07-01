@@ -173,6 +173,130 @@
     .stat-sub { font-size: 11px; color: var(--c-text-3); margin-top: 3px; }
 
     /* =========================================================
+       STILL IN TAB
+       ========================================================= */
+    .status-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+    .status-summary-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .status-summary-card.in  { border-color: rgba(26,138,80,0.35); background: var(--c-accent-light); }
+    .status-summary-card.out { border-color: rgba(192,57,43,0.25); background: var(--c-red-light); }
+    .status-summary-count {
+      font-family: var(--font-display);
+      font-size: 42px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .status-summary-card.in  .status-summary-count { color: var(--c-accent); }
+    .status-summary-card.out .status-summary-count { color: var(--c-red); }
+    .status-summary-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-2);
+      margin-top: 6px;
+    }
+    .status-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .status-toolbar .status-find { flex: 1; min-width: 180px; }
+    .status-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) {
+      .status-columns { grid-template-columns: 1fr; }
+    }
+    .status-col-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-3);
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .status-col-title.in  { color: var(--c-accent); }
+    .status-col-title.out { color: var(--c-red); }
+    .status-list { display: flex; flex-direction: column; gap: 8px; }
+    .status-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .status-card.out { opacity: 0.82; }
+    .status-card-body { flex: 1; min-width: 0; }
+    .status-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .status-card-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+    .status-pill {
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+    .status-pill.in  { background: var(--c-accent-light); color: var(--c-accent); border: 1px solid rgba(26,138,80,0.3); }
+    .status-pill.out { background: var(--c-red-light); color: var(--c-red); border: 1px solid rgba(192,57,43,0.25); }
+    .status-best {
+      font-size: 11px;
+      color: var(--c-text-2);
+      margin-bottom: 6px;
+    }
+    .status-teams { display: flex; flex-direction: column; gap: 3px; }
+    .status-team {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .status-team.elim { opacity: 0.55; text-decoration: line-through; }
+    .status-team-name { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .status-team-round {
+      flex-shrink: 0;
+      font-size: 10px;
+      color: var(--c-text-3);
+      font-family: var(--font-mono);
+    }
+    .status-card.status-hidden { display: none; }
+
+    /* =========================================================
        LEADERBOARD
        ========================================================= */
     .lb-toolbar {
@@ -929,6 +1053,7 @@
       <button class="nav-tab" id="nav-tab-draw" data-tab="draw" onclick="showTab('draw')">🎴 <span>Draw</span></button>
       <button class="nav-tab" data-tab="groups" onclick="showTab('groups')">📊 <span>Groups</span></button>
       <button class="nav-tab" data-tab="bracket" onclick="showTab('bracket')">🔢 <span>Bracket</span></button>
+      <button class="nav-tab" id="nav-tab-status" data-tab="status" onclick="showTab('status')" style="display:none">✅ <span>Still In</span></button>
       <button class="nav-tab" id="nav-tab-prizes" data-tab="prizes" onclick="showTab('prizes')" style="display:none">💰 <span>Prizes</span></button>
     </nav>
   </div>
@@ -986,6 +1111,11 @@
     <div id="bracket-view"></div>
     <div style="display:none">
     </div>
+  </section>
+
+  <!-- STILL IN -->
+  <section id="tab-status" class="section">
+    <div id="status-view"></div>
   </section>
 
   <!-- PRIZES -->
@@ -1233,7 +1363,7 @@ function sortedParticipants(draw) {
 }
 
 // --- Shared participant / group helpers ---
-const VALID_TABS = ['leaderboard', 'draw', 'groups', 'bracket', 'prizes'];
+const VALID_TABS = ['leaderboard', 'draw', 'groups', 'bracket', 'status', 'prizes'];
 const UPCOMING_STATUSES = ['TIMED', 'SCHEDULED', 'IN_PLAY', 'PAUSED'];
 const GROUP_RANK_LABELS = ['1st', '2nd', '3rd', '4th'];
 
@@ -1291,6 +1421,51 @@ function isTeamEliminated(teamName) {
   return rank ? rank.rank > 2 : false;
 }
 
+function isParticipantEliminated(p) {
+  const teams = p.teams || [];
+  if (!teams.length) return false;
+  return teams.every(t => isTeamEliminated(t));
+}
+
+function teamStatusLabel(teamName) {
+  if (isKnockoutPhase()) {
+    const s = teamStatus[teamName] || 'Group';
+    const labels = {
+      Group: 'Group', R32: 'Round of 32', QF: 'Quarter-final', SF: 'Semi-final',
+      '3rd': '3rd place', RU: 'Runner-up', W: 'Winner', OUT: 'Eliminated',
+    };
+    return labels[s] || s;
+  }
+  if (isTeamEliminated(teamName)) {
+    const gr = teamGroupRank(teamName);
+    return gr ? `Out · ${gr.label} · Gr ${gr.group}` : 'Eliminated';
+  }
+  const gr = teamGroupRank(teamName);
+  return gr ? `${gr.label} · Gr ${gr.group}` : 'In contention';
+}
+
+function participantBestAliveLabel(p) {
+  const teams = (p.teams || []).filter(t => !isTeamEliminated(t));
+  if (!teams.length) return '';
+  if (!isKnockoutPhase()) {
+    const best = teams.reduce((acc, t) => {
+      const r = teamGroupRank(t);
+      if (!r) return acc;
+      if (!acc || r.rank < acc.rank || (r.rank === acc.rank && teamGroupPoints(t) > teamGroupPoints(acc.name))) {
+        return { ...r, name: t };
+      }
+      return acc;
+    }, null);
+    return best ? `Best: ${best.label} in Group ${best.group}` : 'Still in contention';
+  }
+  const bestPts = Math.max(...teams.map(t => ROUND_POINTS[teamStatus[t]] || 0));
+  const byPts = {
+    32: 'Winner', 24: 'Runner-up', 20: '3rd place', 16: 'Semi-final',
+    8: 'Quarter-final', 4: 'Round of 32', 0: 'Group stage',
+  };
+  return byPts[bestPts] ? `Best: ${byPts[bestPts]}` : 'Still in';
+}
+
 function getCurrentMatchday() {
   const groupMatches = (apiData.matches || []).filter(m => {
     if (!['FINISHED', 'IN_PLAY', 'PAUSED'].includes(m.status)) return false;
@@ -1341,16 +1516,21 @@ function getParticipantNextMatches(p) {
 
 function updateNavTabs() {
   const simplified = isSimplifiedView();
+  const showStatus = cfg.drawDone;
   document.querySelectorAll('.nav-tab').forEach(btn => {
     const tab = btn.dataset.tab;
     if (tab === 'prizes') {
       btn.style.display = 'none';
       return;
     }
+    if (tab === 'status') {
+      btn.style.display = showStatus ? '' : 'none';
+      return;
+    }
     if (tab === 'draw') {
       btn.style.display = cfg.drawDone ? 'none' : '';
     } else if (simplified) {
-      btn.style.display = tab === 'bracket' ? '' : 'none';
+      btn.style.display = (tab === 'bracket' || tab === 'status') ? '' : 'none';
     } else {
       btn.style.display = '';
     }
@@ -1599,6 +1779,7 @@ function showTab(name, opts = {}) {
     renderBracket();
     requestAnimationFrame(() => requestAnimationFrame(fitBracketToViewport));
   }
+  if (name === 'status') renderStatus();
   if (name === 'prizes') renderPrizes();
 }
 
@@ -1831,6 +2012,135 @@ function renderSpecials() {
       </div>
     </div>
   `;
+}
+
+// --- STILL IN ---
+function statusCardHtml(p, idx, out) {
+  const safeName = p.name.replace(/"/g, '&quot;');
+  const teams = p.teams || [];
+  const bestLabel = out ? '' : participantBestAliveLabel(p);
+  const teamsHtml = teams.length
+    ? teams.map(t => {
+        const elim = isTeamEliminated(t);
+        return `<div class="status-team ${elim ? 'elim' : ''}">
+          <span class="status-team-name">${teamFlag(t)} ${t}</span>
+          <span class="status-team-round">${teamStatusLabel(t)}</span>
+        </div>`;
+      }).join('')
+    : '<div class="status-team"><span class="status-team-name" style="color:var(--c-text-3)">No teams</span></div>';
+
+  return `<div class="status-card ${out ? 'out' : ''}" data-name="${safeName}">
+    ${avatarEl(p.name, idx, p.avatar || null)}
+    <div class="status-card-body">
+      <div class="status-card-head">
+        <div class="status-card-name">${p.name}</div>
+        <span class="status-pill ${out ? 'out' : 'in'}">${out ? 'Out' : 'In'}</span>
+      </div>
+      ${bestLabel ? `<div class="status-best">${bestLabel}</div>` : ''}
+      <div class="status-teams">${teamsHtml}</div>
+    </div>
+  </div>`;
+}
+
+function applyStatusFind() {
+  const input = document.getElementById('status-find-input');
+  if (!input) return;
+  const q = input.value.trim().toLowerCase();
+  document.querySelectorAll('.status-card').forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    card.classList.toggle('status-hidden', !!q && !name.includes(q));
+  });
+}
+
+function initStatusFind() {
+  const input = document.getElementById('status-find-input');
+  const clearBtn = document.getElementById('status-find-clear');
+  if (!input || input.dataset.init) return;
+  input.dataset.init = '1';
+  input.addEventListener('input', applyStatusFind);
+  clearBtn?.addEventListener('click', () => {
+    input.value = '';
+    applyStatusFind();
+  });
+}
+
+function renderStatus() {
+  const container = document.getElementById('status-view');
+  if (!container) return;
+
+  const allParticipants = getAllParticipants();
+  const withTeams = allParticipants.filter(p => (p.teams || []).length);
+  const knockout = isKnockoutPhase();
+
+  if (!cfg.drawDone || !withTeams.length) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">✅</div>
+        Run the draw first — this tab shows who&apos;s still in once teams are assigned.
+      </div>`;
+    return;
+  }
+
+  const stillIn = withTeams.filter(p => !isParticipantEliminated(p))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const eliminated = withTeams.filter(p => isParticipantEliminated(p))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const allForIdx = (MANUAL_DATA.draws || []).flatMap(d => d.participants || []);
+
+  container.innerHTML = `
+    <div class="status-summary">
+      <div class="status-summary-card in">
+        <div class="status-summary-count">${stillIn.length}</div>
+        <div class="status-summary-label">Still in</div>
+      </div>
+      <div class="status-summary-card out">
+        <div class="status-summary-count">${eliminated.length}</div>
+        <div class="status-summary-label">Eliminated</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">${knockout ? 'Knockout stage' : 'Group stage'}</div>
+      <p style="font-size:13px;color:var(--c-text-2);margin-bottom:12px;line-height:1.6">
+        You&apos;re <strong>still in</strong> if at least one of your teams is alive.
+        ${knockout ? 'Teams are eliminated once they lose a knockout match.' : 'Teams are out if they finish 3rd or 4th in their group.'}
+      </p>
+      <div class="status-toolbar">
+        <div class="status-find">
+          <input type="search" id="status-find-input" placeholder="Find yourself…" autocomplete="off" />
+        </div>
+        <button type="button" id="status-find-clear" class="btn btn-sm">Show all</button>
+      </div>
+      <div class="status-columns">
+        <div>
+          <div class="status-col-title in">Still in · ${stillIn.length}</div>
+          <div class="status-list" id="status-list-in">
+            ${stillIn.length
+              ? stillIn.map(p => statusCardHtml(p, allForIdx.indexOf(p), false)).join('')
+              : '<div class="empty" style="padding:1.5rem 0"><div class="empty-icon">😢</div>Everyone&apos;s out</div>'}
+          </div>
+        </div>
+        <div>
+          <div class="status-col-title out">Eliminated · ${eliminated.length}</div>
+          <div class="status-list" id="status-list-out">
+            ${eliminated.length
+              ? eliminated.map(p => statusCardHtml(p, allForIdx.indexOf(p), true)).join('')
+              : '<div class="empty" style="padding:1.5rem 0"><div class="empty-icon">🎉</div>Nobody eliminated yet</div>'}
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  initStatusFind();
+  const params = new URLSearchParams(location.search);
+  const find = params.get('find') || params.get('name');
+  if (find) {
+    const input = document.getElementById('status-find-input');
+    if (input) {
+      input.value = find;
+      applyStatusFind();
+    }
+  }
 }
 
 // --- DRAW (scratch cards) ---
@@ -2207,6 +2517,131 @@ function renderGroups() {
 }
 
 // --- BRACKET ---
+// FIFA 2026 knockout tree (match nos. 73–104) — API order is by date, not bracket slot.
+const R32_FIXTURES = {
+  73: ["Canada", "South Africa"], 74: ["Germany", "Paraguay"],
+  75: ["Morocco", "Netherlands"], 76: ["Brazil", "Japan"],
+  77: ["France", "Sweden"], 78: ["Ivory Coast", "Norway"],
+  79: ["Ecuador", "Mexico"], 80: ["DR Congo", "England"],
+  81: ["Bosnia-Herzegovina", "United States"], 82: ["Belgium", "Senegal"],
+  83: ["Croatia", "Portugal"], 84: ["Austria", "Spain"],
+  85: ["Algeria", "Switzerland"], 86: ["Argentina", "Cabo Verde"],
+  87: ["Colombia", "Ghana"], 88: ["Australia", "Egypt"],
+};
+const R32_BRACKET_ORDER = [74, 77, 73, 75, 83, 84, 81, 82, 76, 78, 79, 80, 86, 88, 85, 87];
+const R16_FEEDERS = {
+  89: [74, 77], 90: [73, 75], 91: [76, 78], 92: [79, 80],
+  93: [83, 84], 94: [81, 82], 95: [86, 88], 96: [85, 87],
+};
+const R16_BRACKET_ORDER = [89, 90, 93, 94, 91, 92, 95, 96];
+const QF_FEEDERS = { 97: [89, 90], 98: [93, 94], 99: [91, 92], 100: [95, 96] };
+const QF_BRACKET_ORDER = [97, 98, 99, 100];
+const SF_FEEDERS = { 101: [97, 98], 102: [99, 100] };
+const SF_BRACKET_ORDER = [101, 102];
+
+function matchTeamsKey(m) {
+  const teams = [normaliseTeamName(m.homeTeam?.name), normaliseTeamName(m.awayTeam?.name)]
+    .filter(Boolean).sort();
+  return teams.join("|");
+}
+
+function knockoutWinner(m) {
+  if (!m || m.status !== "FINISHED") return null;
+  const home = normaliseTeamName(m.homeTeam?.name);
+  const away = normaliseTeamName(m.awayTeam?.name);
+  const homeScore = m.score?.fullTime?.home ?? m.score?.regularTime?.home ?? 0;
+  const awayScore = m.score?.fullTime?.away ?? m.score?.regularTime?.away ?? 0;
+  if (homeScore > awayScore) return home;
+  if (awayScore > homeScore) return away;
+  if (m.score?.penalties) {
+    const ph = m.score.penalties.home, pa = m.score.penalties.away;
+    return ph > pa ? home : away;
+  }
+  return null;
+}
+
+function mapMatchesByFixtureNo(apiMatches, fixtures) {
+  const keyToNo = {};
+  Object.entries(fixtures).forEach(([no, teams]) => {
+    keyToNo[[...teams].sort().join("|")] = +no;
+  });
+  const byNo = {};
+  apiMatches.forEach(m => {
+    const no = keyToNo[matchTeamsKey(m)];
+    if (no) byNo[no] = m;
+  });
+  return byNo;
+}
+
+function expectedFeederWinners(feederNos, matchByNo) {
+  const teams = new Set();
+  feederNos.forEach(no => {
+    const w = knockoutWinner(matchByNo[no]);
+    if (w) teams.add(w);
+  });
+  return teams;
+}
+
+function assignBracketSlots(apiMatches, bracketOrder, feeders, matchByNo) {
+  const slots = bracketOrder.map(() => null);
+  const unmatched = [...apiMatches];
+  bracketOrder.forEach((mno, i) => {
+    const expected = expectedFeederWinners(feeders[mno], matchByNo);
+    let best = -1, bestScore = -1;
+    unmatched.forEach((m, j) => {
+      const actual = new Set(
+        [normaliseTeamName(m.homeTeam?.name), normaliseTeamName(m.awayTeam?.name)].filter(Boolean)
+      );
+      if (!actual.size) return;
+      const score = [...actual].filter(t => expected.has(t)).length;
+      if (score > bestScore) { bestScore = score; best = j; }
+    });
+    if (best >= 0 && bestScore > 0) {
+      slots[i] = unmatched.splice(best, 1)[0];
+    }
+  });
+  unmatched.sort((a, b) => (a.utcDate || "").localeCompare(b.utcDate || ""));
+  for (let i = 0; i < slots.length && unmatched.length; i++) {
+    if (!slots[i]) slots[i] = unmatched.shift();
+  }
+  return slots;
+}
+
+function orderBracketRounds(matches) {
+  const stageKey = s => {
+    const u = (s || "").toUpperCase();
+    if (["LAST_32", "ROUND_OF_32"].includes(u)) return "r32";
+    if (["LAST_16", "ROUND_OF_16"].includes(u)) return "r16";
+    if (["QUARTER_FINALS", "LAST_8"].includes(u)) return "qf";
+    if (["SEMI_FINALS", "LAST_4"].includes(u)) return "sf";
+    if (u === "FINAL") return "final";
+    if (u === "THIRD_PLACE") return "3rd";
+    return null;
+  };
+  const raw = { r32: [], r16: [], qf: [], sf: [], final: [], "3rd": [] };
+  matches.forEach(m => {
+    const k = stageKey(m.stage);
+    if (k) raw[k].push(m);
+  });
+
+  const r32ByNo = mapMatchesByFixtureNo(raw.r32, R32_FIXTURES);
+  const r32 = R32_BRACKET_ORDER.map(no => r32ByNo[no] || null);
+
+  const r16ByNo = {};
+  const r16 = assignBracketSlots(raw.r16, R16_BRACKET_ORDER, R16_FEEDERS, r32ByNo);
+  R16_BRACKET_ORDER.forEach((no, i) => { if (r16[i]) r16ByNo[no] = r16[i]; });
+
+  const qfByNo = {};
+  const qf = assignBracketSlots(raw.qf, QF_BRACKET_ORDER, QF_FEEDERS, r16ByNo);
+  QF_BRACKET_ORDER.forEach((no, i) => { if (qf[i]) qfByNo[no] = qf[i]; });
+
+  const sfByNo = {};
+  const sf = assignBracketSlots(raw.sf, SF_BRACKET_ORDER, SF_FEEDERS, qfByNo);
+  SF_BRACKET_ORDER.forEach((no, i) => { if (sf[i]) sfByNo[no] = sf[i]; });
+
+  return { r32, r16, qf, sf, final: raw.final[0] || null, "3rd": raw["3rd"][0] || null };
+}
+
 function renderBracket() {
   const container = document.getElementById('bracket-view');
   const matches = apiData.matches || [];
@@ -2238,12 +2673,8 @@ function renderBracket() {
     if (u === 'THIRD_PLACE')                                return '3rd';
     return null;
   };
-  const byRound = { r32:[], r16:[], qf:[], sf:[], final:[], '3rd':[] };
-  matches.forEach(m => {
-    const k = stageKey(m.stage);
-    if (k) byRound[k].push(m);
-  });
-  const hasKnockout = Object.values(byRound).some(r => r.length > 0);
+  const byRound = orderBracketRounds(matches);
+  const hasKnockout = matches.some(m => stageKey(m.stage));
 
   // ── Match card ─────────────────────────────────────────────────
   function matchCard(m) {
@@ -2314,8 +2745,8 @@ function renderBracket() {
   }
 
   // ── Notice when no knockout data yet ──────────────────────────
-  const fin = byRound.final[0];
-  const thirdPlace = byRound['3rd'][0];
+  const fin = byRound.final;
+  const thirdPlace = byRound['3rd'];
   const notice = hasKnockout ? '' : `
     <div class="bkt-notice">
       ⚽ Group stage underway — bracket fills in from <strong>28 June 2026</strong>.
@@ -2421,6 +2852,7 @@ function initHeader() {
 initHeader();
 initLbFind();
 initFixturesToggle();
+updateNavTabs();
 showTab(location.hash.slice(1) || getDefaultTab());
 
 window.addEventListener('hashchange', () => {
